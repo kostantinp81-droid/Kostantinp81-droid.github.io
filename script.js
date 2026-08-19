@@ -16,7 +16,13 @@ const commentInput = document.getElementById('comment');
 const today = new Date();
 today.setHours(0, 0, 0, 0);
 
-const iso = (date) => date.toISOString().split('T')[0];
+const iso = (date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
+};
 
 if (checkin) {
   checkin.min = iso(today);
@@ -94,7 +100,7 @@ if (checkout) {
    ВЫБОР ДОМИКА
    ========================= */
 
-document.querySelectorAll('.choose').forEach((btn) => {
+document.querySelectorAll('.choose-house').forEach((btn) => {
 
   btn.addEventListener('click', (event) => {
 
@@ -183,11 +189,133 @@ const topbarNav =
 
 if (menuButton && topbarNav) {
 
+  const setMenuState = (isOpen) => {
+
+    topbarNav.classList.toggle('open', isOpen);
+
+    menuButton.setAttribute(
+      'aria-expanded',
+      String(isOpen)
+    );
+
+    menuButton.setAttribute(
+      'aria-label',
+      isOpen ? 'Закрыть меню' : 'Открыть меню'
+    );
+
+    menuButton.textContent = isOpen ? '×' : '☰';
+
+  };
+
   menuButton.addEventListener('click', () => {
 
-    topbarNav.classList.toggle('open');
+    setMenuState(
+      !topbarNav.classList.contains('open')
+    );
 
   });
+
+  topbarNav.querySelectorAll('a').forEach((link) => {
+
+    link.addEventListener('click', () => {
+      setMenuState(false);
+    });
+
+  });
+
+  document.addEventListener('keydown', (event) => {
+
+    if (event.key === 'Escape') {
+      setMenuState(false);
+    }
+
+  });
+
+  window.addEventListener('resize', () => {
+
+    if (window.innerWidth > 900) {
+      setMenuState(false);
+    }
+
+  });
+
+}
+
+
+/* =========================
+   ПОЯВЛЕНИЕ ПРИ ПРОКРУТКЕ
+   ========================= */
+
+const revealElements =
+  document.querySelectorAll('.reveal');
+
+const heroSection =
+  document.querySelector('.hero');
+
+const reducedMotion =
+  window.matchMedia(
+    '(prefers-reduced-motion: reduce)'
+  ).matches;
+
+if (
+  reducedMotion ||
+  !('IntersectionObserver' in window)
+) {
+
+  revealElements.forEach((element) => {
+    element.classList.add('is-visible');
+  });
+
+  if (heroSection) {
+    heroSection.classList.add('is-visible');
+  }
+
+} else {
+
+  const revealObserver =
+    new IntersectionObserver(
+      (entries, observer) => {
+
+        entries.forEach((entry) => {
+
+          if (!entry.isIntersecting) return;
+
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+
+        });
+
+      },
+      {
+        threshold: 0.12,
+        rootMargin: '0px 0px -8% 0px'
+      }
+    );
+
+  revealElements.forEach((element) => {
+    revealObserver.observe(element);
+  });
+
+  if (heroSection) {
+
+    const heroObserver =
+      new IntersectionObserver(
+        (entries, observer) => {
+
+          if (!entries[0].isIntersecting) return;
+
+          heroSection.classList.add('is-visible');
+          observer.disconnect();
+
+        },
+        {
+          threshold: 0.15
+        }
+      );
+
+    heroObserver.observe(heroSection);
+
+  }
 
 }
 
