@@ -67,13 +67,35 @@ function recalc() {
 checkin.addEventListener('change', recalc);
 checkout.addEventListener('change', recalc);
 
+
+/* =========================
+   ВЫБОР ДОМИКА
+   ========================= */
+
 document.querySelectorAll('.choose').forEach((btn) => {
   btn.addEventListener('click', () => {
-    if (btn.dataset.house) {
+
+    if (btn.dataset.house && house) {
       house.value = btn.dataset.house;
+    }
+
+    if (form) {
+      form.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+
+    if (statusEl) {
+      statusEl.textContent = '';
     }
   });
 });
+
+
+/* =========================
+   МОБИЛЬНОЕ МЕНЮ
+   ========================= */
 
 const menuButton = document.querySelector('.menu');
 const topbarNav = document.querySelector('.topbar nav');
@@ -83,6 +105,11 @@ if (menuButton && topbarNav) {
     topbarNav.classList.toggle('open');
   });
 }
+
+
+/* =========================
+   ОТПРАВКА ЗАЯВКИ
+   ========================= */
 
 form.addEventListener('submit', async (event) => {
   event.preventDefault();
@@ -103,10 +130,6 @@ form.addEventListener('submit', async (event) => {
     statusEl.textContent = 'Отправляем заявку...';
   }
 
-  /*
-    Создаём данные вручную.
-    Так PHP точно получит все поля независимо от name в HTML.
-  */
   const data = new FormData();
 
   data.append('house', house ? house.value : '');
