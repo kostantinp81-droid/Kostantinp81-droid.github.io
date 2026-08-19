@@ -1,4 +1,63 @@
 const PRICE = 10000;
+const APPLICATIONS_STORAGE_KEY =
+  'ostrov-zhaisk-applications-v1';
+
+function readApplications() {
+  try {
+    const saved = localStorage.getItem(
+      APPLICATIONS_STORAGE_KEY
+    );
+
+    if (!saved) return [];
+
+    const applications = JSON.parse(saved);
+
+    return Array.isArray(applications)
+      ? applications
+      : [];
+  } catch (error) {
+    console.error(
+      'Не удалось прочитать заявки:',
+      error
+    );
+
+    return [];
+  }
+}
+
+function saveApplication(application) {
+  try {
+    const applications = readApplications();
+
+    applications.unshift({
+      id:
+        Date.now().toString(36) +
+        Math.random().toString(36).slice(2, 7),
+      house: application.house,
+      checkin: application.checkin,
+      checkout: application.checkout,
+      guests: application.guests,
+      nights: application.nights,
+      total: application.total,
+      status: 'sent',
+      createdAt: new Date().toISOString()
+    });
+
+    localStorage.setItem(
+      APPLICATIONS_STORAGE_KEY,
+      JSON.stringify(applications.slice(0, 20))
+    );
+
+    return true;
+  } catch (error) {
+    console.error(
+      'Не удалось сохранить заявку:',
+      error
+    );
+
+    return false;
+  }
+}
 
 const form = document.getElementById('bookingForm');
 const checkin = document.getElementById('checkin');
@@ -450,11 +509,29 @@ if (form) {
            УСПЕХ
            ========================= */
 
+        const applicationSaved =
+          saveApplication({
+            house: house ? house.value : '',
+            checkin: checkin ? checkin.value : '',
+            checkout: checkout ? checkout.value : '',
+            guests: guests ? guests.value : '',
+            nights,
+            total: price
+          });
+
         if (statusEl) {
 
           statusEl.innerHTML =
             '<strong>Заявка отправлена!</strong><br>' +
-            'Мы свяжемся с вами для подтверждения бронирования.<br><br>' +
+            'Мы свяжемся с вами для подтверждения бронирования.' +
+            (
+              applicationSaved
+                ? '<br><br><a href="requests.html">' +
+                  '<strong>Открыть «Ваши заявки»</strong>' +
+                  '</a>'
+                : ''
+            ) +
+            '<br><br>' +
             'Телефон: ' +
             '<a href="tel:+79200540303">' +
             '<strong>+7 (920) 054-03-03</strong>' +
