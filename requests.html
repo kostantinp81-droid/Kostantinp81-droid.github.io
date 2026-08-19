@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta
+    name="description"
+    content="Ваши отправленные заявки на отдых в Острове Жайск."
+  >
+
+  <meta name="robots" content="noindex, follow">
+  <meta name="theme-color" content="#050505">
+
+  <link
+    rel="icon"
+    type="image/png"
+    href="assets/logo.png"
+  >
+
+  <link
+    rel="apple-touch-icon"
+    href="assets/logo.png"
+  >
+
+  <script>
+    document.documentElement.classList.add('js');
+  </script>
+
+  <title>Ваши заявки — Остров Жайск</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="styles.css?v=7">
+</head>
+
+<body class="requests-page">
+
+  <header class="topbar">
+
+    <a class="brand" href="index.html#top">
+
+      <img
+        src="assets/logo.png"
+        alt=""
+      >
+
+      <span>
+        Остров Жайск
+      </span>
+
+    </a>
+
+    <button
+      class="menu"
+      type="button"
+      aria-label="Открыть меню"
+      aria-expanded="false"
+    >
+      ☰
+    </button>
+
+    <nav>
+
+      <a href="index.html#houses">
+        Домики
+      </a>
+
+      <a href="index.html#rest">
+        Отдых
+      </a>
+
+      <a href="index.html#about">
+        О месте
+      </a>
+
+      <a href="index.html#contacts">
+        Контакты
+      </a>
+
+      <a
+        class="nav-current"
+        href="requests.html"
+        aria-current="page"
+      >
+        Ваши заявки
+      </a>
+
+      <a
+        class="nav-cta"
+        href="index.html#booking"
+      >
+        Забронировать
+      </a>
+
+    </nav>
+
+  </header>
+
+  <main class="requests-main">
+
+    <section class="section requests-section">
+
+      <div class="requests-heading reveal">
+
+        <p class="eyebrow">
+          Бронирование
+        </p>
+
+        <h1>
+          Ваши заявки
+        </h1>
+
+        <p class="requests-lead">
+          Здесь сохраняются заявки, отправленные с этого устройства.
+          После подтверждения администратор свяжется с вами по телефону.
+        </p>
+
+      </div>
+
+      <div
+        id="requestsList"
+        class="requests-list reveal"
+        aria-live="polite"
+      ></div>
+
+      <noscript>
+        <p class="requests-noscript">
+          Чтобы посмотреть заявки, включите JavaScript в браузере.
+        </p>
+      </noscript>
+
+    </section>
+
+  </main>
+
+  <footer>
+
+    <div class="brand">
+
+      <img
+        src="assets/logo.png"
+        alt=""
+      >
+
+      <span>
+        Остров Жайск
+      </span>
+
+    </div>
+
+    <a href="tel:+79200540303">
+      +7&nbsp;920&nbsp;054&#8209;03&#8209;03
+    </a>
+
+  </footer>
+
+  <script src="script.js?v=7"></script>
+  <script src="requests.js?v=1"></script>
+
+</body>
+
+</html>
