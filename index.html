@@ -1,550 +1,996 @@
-const PRICE = 10000;
-
-const form = document.getElementById('bookingForm');
-const checkin = document.getElementById('checkin');
-const checkout = document.getElementById('checkout');
-const total = document.getElementById('total');
-const nightsLabel = document.getElementById('nights');
-const house = document.getElementById('house');
-const statusEl = document.getElementById('formStatus');
-
-const guests = document.getElementById('guests');
-const nameInput = document.getElementById('name');
-const phoneInput = document.getElementById('phone');
-const commentInput = document.getElementById('comment');
-
-const today = new Date();
-today.setHours(0, 0, 0, 0);
-
-const iso = (date) => date.toISOString().split('T')[0];
-
-if (checkin) {
-  checkin.min = iso(today);
-}
-
-if (checkout) {
-  checkout.min = iso(
-    new Date(today.getTime() + 86400000)
-  );
-}
-
-
-/* =========================
-   КОЛИЧЕСТВО СУТОК
-   ========================= */
-
-function getNights() {
-  if (
-    !checkin ||
-    !checkout ||
-    !checkin.value ||
-    !checkout.value
-  ) {
-    return 1;
-  }
-
-  const start = new Date(
-    checkin.value + 'T00:00:00'
-  );
-
-  const end = new Date(
-    checkout.value + 'T00:00:00'
-  );
-
-  const diff = Math.round(
-    (end - start) / 86400000
-  );
-
-  return diff > 0 ? diff : 1;
-}
-
-
-function getNightWord(nights) {
-  const mod10 = nights % 10;
-  const mod100 = nights % 100;
-
-  if (
-    mod10 === 1 &&
-    mod100 !== 11
-  ) {
-    return 'сутки';
-  }
-
-  return 'суток';
-}
-
-
-/* =========================
-   РАСЧЁТ СТОИМОСТИ
-   ========================= */
-
-function recalc() {
-  if (!checkin || !checkout) {
-    return;
-  }
+<!doctype html>
+<html lang="ru">
 
-  if (checkin.value) {
-    const minCheckout = new Date(
-      checkin.value + 'T00:00:00'
-    );
-
-    minCheckout.setDate(
-      minCheckout.getDate() + 1
-    );
-
-    checkout.min = iso(minCheckout);
-
-    if (
-      checkout.value &&
-      checkout.value <= checkin.value
-    ) {
-      checkout.value = '';
-    }
-  }
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  const nights = getNights();
-  const price = nights * PRICE;
+  <meta
+    name="description"
+    content="Остров Жайск — уютные домики на берегу Оки. Чан, SUP, пруд, мангальная зона и отдых на природе."
+  >
 
-  if (total) {
-    total.textContent =
-      price.toLocaleString('ru-RU') + ' ₽';
-  }
+  <meta name="theme-color" content="#050505">
 
-  if (nightsLabel) {
-    nightsLabel.textContent =
-      nights + ' ' + getNightWord(nights);
-  }
-}
+  <title>Остров Жайск — отдых на берегу Оки</title>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-if (checkin) {
-  checkin.addEventListener(
-    'change',
-    recalc
-  );
-}
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  >
 
-if (checkout) {
-  checkout.addEventListener(
-    'change',
-    recalc
-  );
-}
+  <link rel="stylesheet" href="styles.css?v=5">
+</head>
 
 
-/* =========================
-   ВЫБОР ДОМИКА
-   ========================= */
+<body>
 
-/*
-Кнопка сама переходит к #booking
-через href в index.html.
 
-JavaScript здесь только выбирает
-нужный домик в форме.
-*/
+<!-- =========================
+     ПЕРВЫЙ ЭКРАН
+     ========================= -->
 
-document
-  .querySelectorAll('.choose-house')
-  .forEach((link) => {
+<section
+  class="intro-screen"
+  id="top"
+  aria-label="Остров Жайск"
+>
 
-    link.addEventListener(
-      'click',
-      () => {
+  <div class="intro-glow"></div>
 
-        if (
-          link.dataset.house &&
-          house
-        ) {
-          house.value =
-            link.dataset.house;
-        }
+  <img
+    class="intro-logo"
+    src="assets/logo.png"
+    alt="Остров Жайск"
+  >
 
-        if (statusEl) {
-          statusEl.textContent = '';
-        }
+  <div class="intro-scroll">
 
-      }
-    );
+    <span>
+      листайте вниз
+    </span>
 
-  });
+    <i></i>
 
+  </div>
 
-/* =========================
-   МОБИЛЬНОЕ МЕНЮ
-   ========================= */
+</section>
 
-const menuButton =
-  document.querySelector('.menu');
 
-const topbarNav =
-  document.querySelector('.topbar nav');
+<!-- =========================
+     МЕНЮ
+     ========================= -->
 
+<header class="topbar">
 
-if (
-  menuButton &&
-  topbarNav
-) {
+  <a class="brand" href="#top">
 
-  menuButton.addEventListener(
-    'click',
-    () => {
+    <img
+      src="assets/logo.png"
+      alt=""
+    >
 
-      const opened =
-        topbarNav.classList.toggle(
-          'open'
-        );
+    <span>
+      Остров Жайск
+    </span>
 
-      menuButton.setAttribute(
-        'aria-expanded',
-        String(opened)
-      );
+  </a>
 
-    }
-  );
 
+  <button
+    class="menu"
+    type="button"
+    aria-label="Открыть меню"
+    aria-expanded="false"
+  >
+    ☰
+  </button>
 
-  topbarNav
-    .querySelectorAll('a')
-    .forEach((link) => {
 
-      link.addEventListener(
-        'click',
-        () => {
+  <nav>
 
-          topbarNav.classList.remove(
-            'open'
-          );
+    <a href="#houses">
+      Домики
+    </a>
 
-          menuButton.setAttribute(
-            'aria-expanded',
-            'false'
-          );
+    <a href="#rest">
+      Отдых
+    </a>
 
-        }
-      );
+    <a href="#about">
+      О месте
+    </a>
 
-    });
+    <a href="#contacts">
+      Контакты
+    </a>
 
-}
+    <a
+      class="nav-cta"
+      href="#booking"
+    >
+      Забронировать
+    </a>
 
+  </nav>
 
-/* =========================
-   ПОЯВЛЕНИЕ ИЗ ТЕМНОТЫ
-   ========================= */
+</header>
 
-const revealElements =
-  document.querySelectorAll('.reveal');
 
-const hero =
-  document.querySelector('.hero');
+<main>
 
 
-const observer =
-  new IntersectionObserver(
-    (entries) => {
+<!-- =========================
+     ФОТО ПОСЛЕ ЛОГОТИПА
+     ========================= -->
 
-      entries.forEach(
-        (entry) => {
+<section class="hero">
 
-          if (entry.isIntersecting) {
+  <div class="hero-bg"></div>
 
-            entry.target.classList.add(
-              'is-visible'
-            );
+  <div class="hero-shade"></div>
 
-            observer.unobserve(
-              entry.target
-            );
 
-          }
+  <div class="hero-content reveal">
 
-        }
-      );
+    <img
+      class="hero-logo"
+      src="assets/logo.png"
+      alt="Логотип Остров Жайск"
+    >
 
-    },
-    {
-      threshold: 0.12,
-      rootMargin:
-        '0px 0px -8% 0px'
-    }
-  );
 
+    <p class="eyebrow">
+      Нижегородская область · берег Оки
+    </p>
 
-revealElements.forEach(
-  (element) => {
-    observer.observe(element);
-  }
-);
 
+    <h1>
+      Остров Жайск
+    </h1>
 
-/* =========================
-   ПОЯВЛЕНИЕ ФОТО
-   ========================= */
 
-if (hero) {
+    <p class="lead">
+      Тишина, вода и комфортный отдых
+      вдали от городского шума.
+    </p>
 
-  const heroObserver =
-    new IntersectionObserver(
-      ([entry]) => {
 
-        if (entry.isIntersecting) {
+    <a
+      class="button gold"
+      href="#houses"
+    >
+      Выбрать домик
+    </a>
 
-          hero.classList.add(
-            'is-visible'
-          );
+  </div>
 
-          heroObserver.disconnect();
+</section>
 
-        }
 
-      },
-      {
-        threshold: 0.15
-      }
-    );
+<!-- =========================
+     О БАЗЕ
+     ========================= -->
 
-  heroObserver.observe(hero);
+<section class="section intro reveal">
 
-}
+  <p class="eyebrow">
+    Отдых на природе
+  </p>
 
 
-/* =========================
-   ОТПРАВКА ЗАЯВКИ
-   ========================= */
+  <h2>
+    Место, куда хочется возвращаться
+  </h2>
 
-if (form) {
 
-  form.addEventListener(
-    'submit',
-    async (event) => {
+  <p class="section-lead">
 
-      event.preventDefault();
+    Три уютных домика на берегу Оки
+    в селе Жайск.
 
-      recalc();
+    У каждого — собственный
+    дровяной чан.
 
-      const nights =
-        getNights();
+    На территории есть искусственный
+    пруд со стерлядью, SUP-доски,
+    мангальная зона и всё необходимое
+    для комфортного отдыха.
 
-      const price =
-        nights * PRICE;
+  </p>
 
-      const submitButton =
-        form.querySelector(
-          'button[type="submit"]'
-        );
 
+  <div class="facts">
 
-      if (submitButton) {
+    <span>
+      <b>3</b>
+      домика
+    </span>
 
-        submitButton.disabled = true;
+    <span>
+      <b>до 4</b>
+      гостей
+    </span>
 
-        submitButton.textContent =
-          'ОТПРАВЛЯЕМ...';
+    <span>
+      <b>10 000 ₽</b>
+      за сутки
+    </span>
 
-      }
+    <span>
+      <b>3</b>
+      собственных чана
+    </span>
 
+  </div>
 
-      if (statusEl) {
+</section>
 
-        statusEl.textContent =
-          'Отправляем заявку...';
 
-      }
+<!-- =========================
+     ДОМИКИ
+     ========================= -->
 
+<section
+  id="houses"
+  class="section dark"
+>
 
-      /* =========================
-         СОБИРАЕМ ДАННЫЕ
-         ========================= */
+  <div class="reveal">
 
-      const data =
-        new FormData();
+    <p class="eyebrow">
+      Проживание
+    </p>
 
+    <h2>
+      Выберите свой домик
+    </h2>
 
-      data.append(
-        'house',
-        house
-          ? house.value
-          : ''
-      );
+  </div>
 
 
-      data.append(
-        'checkin',
-        checkin
-          ? checkin.value
-          : ''
-      );
+  <div class="cards">
 
 
-      data.append(
-        'checkout',
-        checkout
-          ? checkout.value
-          : ''
-      );
+    <!-- ОСЕТРОВЫЙ -->
 
+    <article class="house-card reveal">
 
-      data.append(
-        'guests',
-        guests
-          ? guests.value
-          : ''
-      );
+      <div class="card-photo">
 
+        <img
+          src="assets/cabin-exterior.jpg"
+          alt="Домик Осетровый"
+        >
 
-      data.append(
-        'name',
-        nameInput
-          ? nameInput.value.trim()
-          : ''
-      );
+      </div>
 
 
-      data.append(
-        'phone',
-        phoneInput
-          ? phoneInput.value.trim()
-          : ''
-      );
+      <div class="card-body">
 
+        <div class="symbol">
+          ◈
+        </div>
 
-      data.append(
-        'comment',
-        commentInput
-          ? commentInput.value.trim()
-          : ''
-      );
+        <h3>
+          Осетровый
+        </h3>
 
+        <p>
+          Домик с характером
+          Острова Жайск.
+        </p>
 
-      data.append(
-        'nights',
-        nights
-      );
 
+        <ul>
 
-      data.append(
-        'total',
-        price
-      );
+          <li>
+            До 4 гостей
+          </li>
 
+          <li>
+            2 спальни
+          </li>
 
-      /* =========================
-         ОТПРАВЛЯЕМ В TELEGRAM
-         ========================= */
+          <li>
+            Кухня-гостиная
+          </li>
 
-      try {
+          <li>
+            Собственный чан
+          </li>
 
-        const response =
-          await fetch(
-            'https://api.островжайск.рф/telegram.php',
-            {
-              method: 'POST',
-              body: data
-            }
-          );
+        </ul>
 
 
-        const result =
-          await response.json();
+        <div class="price">
 
+          10 000 ₽
 
-        if (
-          !response.ok ||
-          !result.ok
-        ) {
+          <small>
+            / сутки
+          </small>
 
-          throw new Error(
-            result.error ||
-            'Не удалось отправить заявку'
-          );
+        </div>
 
-        }
 
+        <a
+          class="button outline choose-house"
+          href="#booking"
+          data-house="Осетровый"
+        >
+          Выбрать
+        </a>
 
-        /* =========================
-           ЗАЯВКА ОТПРАВЛЕНА
-           ========================= */
+      </div>
 
-        if (statusEl) {
+    </article>
 
-          statusEl.innerHTML =
-            '<strong>Заявка отправлена!</strong><br>' +
-            'Мы свяжемся с вами для подтверждения бронирования.<br><br>' +
-            'Телефон: ' +
-            '<a href="tel:+79200540303">' +
-            '<strong>+7 (920) 054-03-03</strong>' +
-            '</a>';
 
-        }
+    <!-- ОКСКИЙ -->
 
+    <article class="house-card reveal">
 
-        form.reset();
+      <div class="card-photo">
 
+        <img
+          src="assets/cabin-exterior.jpg"
+          alt="Домик Окский"
+        >
 
-        if (checkin) {
+      </div>
 
-          checkin.min =
-            iso(today);
 
-        }
+      <div class="card-body">
 
+        <div class="symbol">
+          ≈
+        </div>
 
-        if (checkout) {
+        <h3>
+          Окский
+        </h3>
 
-          checkout.min =
-            iso(
-              new Date(
-                today.getTime() +
-                86400000
-              )
-            );
+        <p>
+          Спокойствие и простор
+          на берегу Оки.
+        </p>
 
-        }
 
+        <ul>
 
-        recalc();
+          <li>
+            До 4 гостей
+          </li>
 
-      } catch (error) {
+          <li>
+            2 спальни
+          </li>
 
-        console.error(
-          'Ошибка заявки:',
-          error
-        );
+          <li>
+            Кухня-гостиная
+          </li>
 
+          <li>
+            Собственный чан
+          </li>
 
-        if (statusEl) {
+        </ul>
 
-          statusEl.innerHTML =
-            'Не удалось отправить заявку.<br><br>' +
-            'Позвоните нам: ' +
-            '<a href="tel:+79200540303">' +
-            '<strong>+7 (920) 054-03-03</strong>' +
-            '</a>';
 
-        }
+        <div class="price">
 
-      } finally {
+          10 000 ₽
 
-        if (submitButton) {
+          <small>
+            / сутки
+          </small>
 
-          submitButton.disabled = false;
+        </div>
 
-          submitButton.textContent =
-            'ОТПРАВИТЬ ЗАЯВКУ';
 
-        }
+        <a
+          class="button outline choose-house"
+          href="#booking"
+          data-house="Окский"
+        >
+          Выбрать
+        </a>
 
-      }
+      </div>
 
-    }
-  );
+    </article>
 
-}
 
+    <!-- ЕЛОВЫЙ -->
 
-/* =========================
-   ПЕРВЫЙ РАСЧЁТ
-   ========================= */
+    <article class="house-card reveal">
 
-recalc();
+      <div class="card-photo">
+
+        <img
+          src="assets/cabin-exterior.jpg"
+          alt="Домик Еловый"
+        >
+
+      </div>
+
+
+      <div class="card-body">
+
+        <div class="symbol">
+          ♠
+        </div>
+
+        <h3>
+          Еловый
+        </h3>
+
+        <p>
+          Уютный отдых среди
+          зелени и тишины.
+        </p>
+
+
+        <ul>
+
+          <li>
+            До 4 гостей
+          </li>
+
+          <li>
+            2 спальни
+          </li>
+
+          <li>
+            Кухня-гостиная
+          </li>
+
+          <li>
+            Собственный чан
+          </li>
+
+        </ul>
+
+
+        <div class="price">
+
+          10 000 ₽
+
+          <small>
+            / сутки
+          </small>
+
+        </div>
+
+
+        <a
+          class="button outline choose-house"
+          href="#booking"
+          data-house="Еловый"
+        >
+          Выбрать
+        </a>
+
+      </div>
+
+    </article>
+
+  </div>
+
+
+  <p class="photo-note reveal">
+    После фотосессии у каждого домика
+    будет собственная фотогалерея.
+  </p>
+
+</section>
+
+
+<!-- =========================
+     ВНУТРИ ДОМИКА
+     ========================= -->
+
+<section class="split section">
+
+  <div class="reveal">
+
+    <p class="eyebrow">
+      Внутри домика
+    </p>
+
+
+    <h2>
+      Всё для комфортного отдыха
+    </h2>
+
+
+    <p>
+
+      На первом и втором этажах
+      расположены спальни.
+
+      Просторная кухня-гостиная
+      объединяет зону отдыха
+      с диванами, столом
+      и телевизором.
+
+    </p>
+
+
+    <div class="amenities">
+
+      <span>2 спальни</span>
+
+      <span>Душ и туалет</span>
+
+      <span>Горячая вода</span>
+
+      <span>Wi-Fi</span>
+
+      <span>Телевизор</span>
+
+      <span>Холодильник</span>
+
+      <span>Плита</span>
+
+      <span>Микроволновка</span>
+
+      <span>Посуда и приборы</span>
+
+    </div>
+
+  </div>
+
+
+  <img
+    class="reveal"
+    src="assets/cabin-interior.jpg"
+    alt="Интерьер домика"
+  >
+
+</section>
+
+
+<!-- =========================
+     ОТДЫХ
+     ========================= -->
+
+<section
+  id="rest"
+  class="section rest"
+>
+
+  <div class="reveal">
+
+    <p class="eyebrow">
+      На территории
+    </p>
+
+    <h2>
+      Отдых в своём ритме
+    </h2>
+
+  </div>
+
+
+  <div class="feature-grid">
+
+
+    <article class="reveal">
+
+      <img
+        src="assets/hot-tub-1.jpg"
+        alt="Дровяной чан"
+      >
+
+      <h3>
+        Дровяной чан
+      </h3>
+
+      <p>
+        У каждого домика — свой чан.
+        Особенно хорош вечером,
+        когда вокруг становится тихо.
+      </p>
+
+    </article>
+
+
+    <article class="reveal">
+
+      <div class="placeholder">
+        ОКА
+      </div>
+
+      <h3>
+        Река и SUP
+      </h3>
+
+      <p>
+        Прогулки по воде
+        на SUP-досках и отдых
+        на берегу Оки.
+      </p>
+
+    </article>
+
+
+    <article class="reveal">
+
+      <div class="placeholder">
+        ПРУД
+      </div>
+
+      <h3>
+        Пруд со стерлядью
+      </h3>
+
+      <p>
+        Искусственный пруд
+        на территории —
+        часть атмосферы
+        Острова Жайск.
+      </p>
+
+    </article>
+
+
+    <article class="reveal">
+
+      <div class="placeholder">
+        ОГОНЬ
+      </div>
+
+      <h3>
+        Мангальная зона
+      </h3>
+
+      <p>
+        Место для ужина
+        на свежем воздухе
+        и спокойных вечеров
+        у огня.
+      </p>
+
+    </article>
+
+  </div>
+
+</section>
+
+
+<!-- =========================
+     О МЕСТЕ
+     ========================= -->
+
+<section
+  id="about"
+  class="section story reveal"
+>
+
+  <p class="eyebrow">
+    О месте
+  </p>
+
+
+  <h2>
+    Жайск. Берег Оки.
+  </h2>
+
+
+  <p>
+
+    Остров Жайск находится
+    у старинного села Жайск
+    на правом берегу Оки.
+
+    Здесь главное — не спешить:
+    смотреть на воду, гулять,
+    отдыхать у огня
+    и проводить время вместе.
+
+  </p>
+
+</section>
+
+
+<!-- =========================
+     БРОНИРОВАНИЕ
+     ========================= -->
+
+<section
+  id="booking"
+  class="section booking"
+>
+
+
+  <div class="booking-copy reveal">
+
+    <p class="eyebrow">
+      Бронирование
+    </p>
+
+
+    <h2>
+      Выберите даты
+    </h2>
+
+
+    <p>
+
+      Стоимость любого домика —
+
+      <b>
+        10 000 ₽ за сутки
+      </b>.
+
+      Время заезда и выезда
+      согласовывается индивидуально.
+
+    </p>
+
+
+    <p>
+
+      После отправки заявки
+      администратор свяжется
+      с вами для подтверждения
+      бронирования.
+
+    </p>
+
+  </div>
+
+
+  <form
+    id="bookingForm"
+    class="reveal"
+  >
+
+
+    <label>
+
+      Домик
+
+      <select
+        id="house"
+        required
+      >
+
+        <option value="Осетровый">
+          Осетровый
+        </option>
+
+        <option value="Окский">
+          Окский
+        </option>
+
+        <option value="Еловый">
+          Еловый
+        </option>
+
+      </select>
+
+    </label>
+
+
+    <div class="form-row">
+
+
+      <label>
+
+        Заезд
+
+        <input
+          id="checkin"
+          type="date"
+          required
+        >
+
+      </label>
+
+
+      <label>
+
+        Выезд
+
+        <input
+          id="checkout"
+          type="date"
+          required
+        >
+
+      </label>
+
+
+    </div>
+
+
+    <div class="form-row">
+
+
+      <label>
+
+        Гостей
+
+        <select id="guests">
+
+          <option>1</option>
+
+          <option>2</option>
+
+          <option>3</option>
+
+          <option selected>
+            4
+          </option>
+
+        </select>
+
+      </label>
+
+
+      <label>
+
+        Телефон
+
+        <input
+          id="phone"
+          type="tel"
+          placeholder="+7 999 000-00-00"
+          required
+        >
+
+      </label>
+
+
+    </div>
+
+
+    <label>
+
+      Имя
+
+      <input
+        id="name"
+        type="text"
+        placeholder="Как к вам обращаться"
+        required
+      >
+
+    </label>
+
+
+    <label>
+
+      Комментарий
+
+      <textarea
+        id="comment"
+        rows="3"
+        placeholder="Необязательно"
+      ></textarea>
+
+    </label>
+
+
+    <div class="total">
+
+      <span>
+        Итого
+      </span>
+
+      <strong id="total">
+        10 000 ₽
+      </strong>
+
+      <small id="nights">
+        1 сутки
+      </small>
+
+    </div>
+
+
+    <button
+      class="button gold"
+      type="submit"
+    >
+      Отправить заявку
+    </button>
+
+
+    <p
+      id="formStatus"
+      class="status"
+    ></p>
+
+
+  </form>
+
+</section>
+
+
+<!-- =========================
+     КОНТАКТЫ
+     ========================= -->
+
+<section
+  id="contacts"
+  class="section contacts reveal"
+>
+
+  <p class="eyebrow">
+    Контакты
+  </p>
+
+
+  <h2>
+    Остров Жайск
+  </h2>
+
+
+  <p>
+    с. Жайск, Нижегородская область · берег Оки
+  </p>
+
+
+  <a
+    class="phone"
+    href="tel:+79200540303"
+  >
+    +7 920 054-03-03
+  </a>
+
+
+  <p class="muted">
+
+    Точный маршрут и детали
+    заезда сообщим при бронировании.
+
+  </p>
+
+</section>
+
+
+</main>
+
+
+<!-- =========================
+     ПОДВАЛ
+     ========================= -->
+
+<footer>
+
+  <div class="brand">
+
+    <img
+      src="assets/logo.png"
+      alt=""
+    >
+
+    <span>
+      Остров Жайск
+    </span>
+
+  </div>
+
+
+  <span>
+    © 2026
+  </span>
+
+</footer>
+
+
+<script src="config.js"></script>
+
+<script src="script.js?v=5"></script>
+
+
+</body>
+
+</html>
