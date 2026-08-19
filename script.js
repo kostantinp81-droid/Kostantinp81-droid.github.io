@@ -1,6 +1,11 @@
 const PRICE = 10000;
+const BOOKING_API_URL =
+  'https://api.островжайск.рф/telegram.php';
+const DEFAULT_BOOKING_COUNT = 2347;
 const APPLICATIONS_STORAGE_KEY =
   'ostrov-zhaisk-applications-v1';
+const CONTACT_DETAILS_COOKIE =
+  'ostrov_zhaisk_contact_v1';
 
 function readApplications() {
   try {
@@ -71,6 +76,213 @@ const guests = document.getElementById('guests');
 const nameInput = document.getElementById('name');
 const phoneInput = document.getElementById('phone');
 const commentInput = document.getElementById('comment');
+const bookingCounter = document.getElementById('bookingCounter');
+
+function readContactDetails() {
+  try {
+    const prefix = `${CONTACT_DETAILS_COOKIE}=`;
+    const savedCookie = document.cookie
+      .split('; ')
+      .find((item) => item.startsWith(prefix));
+
+    if (!savedCookie) return {};
+
+    const details = JSON.parse(
+      decodeURIComponent(savedCookie.slice(prefix.length))
+    );
+
+    return details && typeof details === 'object'
+      ? details
+      : {};
+  } catch (error) {
+    console.error(
+      'Не удалось прочитать контактные данные:',
+      error
+    );
+
+    return {};
+  }
+}
+
+function saveContactDetails() {
+  if (!nameInput && !phoneInput) return;
+
+  try {
+    const value = encodeURIComponent(
+      JSON.stringify({
+        name: nameInput ? nameInput.value.trim() : '',
+        phone: phoneInput ? phoneInput.value.trim() : ''
+      })
+    );
+    const secure = window.location.protocol === 'https:'
+      ? '; Secure'
+      : '';
+
+    document.cookie =
+      `${CONTACT_DETAILS_COOKIE}=${value}; ` +
+      `Max-Age=31536000; Path=/; SameSite=Lax${secure}`;
+  } catch (error) {
+    console.error(
+      'Не удалось сохранить контактные данные:',
+      error
+    );
+  }
+}
+
+function restoreContactDetails() {
+  const details = readContactDetails();
+
+  if (nameInput && typeof details.name === 'string') {
+    nameInput.value = details.name.slice(0, 120);
+  }
+
+  if (phoneInput && typeof details.phone === 'string') {
+    phoneInput.value = details.phone.slice(0, 60);
+  }
+}
+
+function renderBookingCount(value, animate = false) {
+  if (!bookingCounter) return;
+
+  const count = Number.parseInt(value, 10);
+
+  if (!Number.isFinite(count) || count < DEFAULT_BOOKING_COUNT) {
+    return;
+  }
+
+  bookingCounter.textContent = count.toLocaleString('ru-RU');
+
+  if (animate) {
+    const card = bookingCounter.closest('.booking-counter');
+
+    if (card) {
+      card.classList.remove('is-updated');
+      window.requestAnimationFrame(() => {
+        card.classList.add('is-updated');
+        window.setTimeout(
+          () => card.classList.remove('is-updated'),
+          700
+        );
+      });
+    }
+  }
+}
+
+async function loadBookingCount() {
+  if (!bookingCounter) return;
+
+  try {
+    const response = await fetch(
+      `${BOOKING_API_URL}?booking_count=1`,
+      { cache: 'no-store' }
+    );
+    const result = await response.json();
+
+    if (response.ok && result.ok) {
+      renderBookingCount(result.count);
+    }
+  } catch (error) {
+    console.error(
+      'Не удалось обновить счётчик заявок:',
+      error
+    );
+  }
+}
+
+restoreContactDetails();
+
+if (nameInput) {
+  nameInput.addEventListener('input', saveContactDetails);
+}
+
+if (phoneInput) {
+  phoneInput.addEventListener('input', saveContactDetails);
+}
+
+const oxidationTriggerSelector =
+  'button, .button, .nav-cta, .house-catalog-card, input, select, textarea';
+
+function showOxidationOrnament(x, y) {
+  if (
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  ) {
+    return;
+  }
+
+  const ornament = document.createElement('span');
+  ornament.className = 'oxidation-ornament';
+  ornament.setAttribute('aria-hidden', 'true');
+  ornament.style.left = `${x}px`;
+  ornament.style.top = `${y}px`;
+  ornament.innerHTML = `
+    <svg viewBox="0 0 120 120" focusable="false">
+      <circle class="oxidation-ring" cx="60" cy="60" r="45" />
+      <circle class="oxidation-ring oxidation-ring-inner" cx="60" cy="60" r="18" />
+      <g class="oxidation-leaf">
+        <path d="M60 48C51 40 52 29 60 20C68 29 69 40 60 48Z" />
+        <path d="M60 21V51" />
+      </g>
+      <g class="oxidation-leaf" transform="rotate(90 60 60)">
+        <path d="M60 48C51 40 52 29 60 20C68 29 69 40 60 48Z" />
+        <path d="M60 21V51" />
+      </g>
+      <g class="oxidation-leaf" transform="rotate(180 60 60)">
+        <path d="M60 48C51 40 52 29 60 20C68 29 69 40 60 48Z" />
+        <path d="M60 21V51" />
+      </g>
+      <g class="oxidation-leaf" transform="rotate(270 60 60)">
+        <path d="M60 48C51 40 52 29 60 20C68 29 69 40 60 48Z" />
+        <path d="M60 21V51" />
+      </g>
+      <path class="oxidation-curl" d="M60 60C45 59 38 51 40 42C42 34 51 35 51 42C51 47 46 49 43 46" />
+      <path class="oxidation-curl" d="M60 60C61 45 69 38 78 40C86 42 85 51 78 51C73 51 71 46 74 43" />
+      <path class="oxidation-curl" d="M60 60C75 61 82 69 80 78C78 86 69 85 69 78C69 73 74 71 77 74" />
+      <path class="oxidation-curl" d="M60 60C59 75 51 82 42 80C34 78 35 69 42 69C47 69 49 74 46 77" />
+      <circle class="oxidation-core" cx="60" cy="60" r="3" />
+    </svg>
+  `;
+
+  document.body.appendChild(ornament);
+
+  const removeOrnament = () => ornament.remove();
+  ornament.addEventListener(
+    'animationend',
+    removeOrnament,
+    { once: true }
+  );
+  window.setTimeout(removeOrnament, 1400);
+}
+
+document.addEventListener('pointerdown', (event) => {
+  const target = event.target instanceof Element
+    ? event.target.closest(oxidationTriggerSelector)
+    : null;
+
+  if (!target || target.matches(':disabled')) return;
+
+  showOxidationOrnament(event.clientX, event.clientY);
+});
+
+document.addEventListener('keydown', (event) => {
+  if (
+    event.repeat ||
+    (event.key !== 'Enter' && event.key !== ' ')
+  ) {
+    return;
+  }
+
+  const target = event.target instanceof Element
+    ? event.target.closest('button, .button, .nav-cta')
+    : null;
+
+  if (!target || target.matches(':disabled')) return;
+
+  const rect = target.getBoundingClientRect();
+  showOxidationOrnament(
+    rect.left + rect.width / 2,
+    rect.top + rect.height / 2
+  );
+});
 
 const today = new Date();
 today.setHours(0, 0, 0, 0);
@@ -89,6 +301,17 @@ if (checkin) {
 
 if (checkout) {
   checkout.min = iso(new Date(today.getTime() + 86400000));
+}
+
+if (house) {
+  const requestedHouse = new URLSearchParams(
+    window.location.search
+  ).get('house');
+  const availableHouses = ['Осетровый', 'Окский', 'Еловый'];
+
+  if (availableHouses.includes(requestedHouse)) {
+    house.value = requestedHouse;
+  }
 }
 
 function getNights() {
@@ -478,7 +701,7 @@ if (form) {
       try {
 
         const response = await fetch(
-          'https://api.островжайск.рф/telegram.php',
+          BOOKING_API_URL,
           {
             method: 'POST',
             body: data
@@ -519,6 +742,14 @@ if (form) {
             total: price
           });
 
+        saveContactDetails();
+
+        if (Number.isInteger(result.count)) {
+          renderBookingCount(result.count, true);
+        } else {
+          loadBookingCount();
+        }
+
         if (statusEl) {
 
           statusEl.innerHTML =
@@ -540,6 +771,8 @@ if (form) {
         }
 
         form.reset();
+
+        restoreContactDetails();
 
         if (checkin) {
           checkin.min = iso(today);
@@ -599,3 +832,4 @@ if (form) {
    ========================= */
 
 recalc();
+loadBookingCount();

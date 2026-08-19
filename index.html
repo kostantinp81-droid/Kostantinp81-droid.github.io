@@ -107,7 +107,7 @@
     rel="stylesheet"
   >
 
-  <link rel="stylesheet" href="styles.css?v=8">
+  <link rel="stylesheet" href="styles.css?v=9">
 </head>
 
 
@@ -197,7 +197,7 @@
 
   <nav aria-label="Основная навигация">
 
-    <a href="#houses">
+    <a href="houses.html">
       Домики
     </a>
 
@@ -270,7 +270,7 @@
 
     <a
       class="button gold"
-      href="#houses"
+      href="houses.html"
     >
       Выбрать домик
     </a>
@@ -355,8 +355,17 @@
     </p>
 
     <h2>
-      Выберите свой домик
+      Три домика — одна атмосфера
     </h2>
+
+    <p class="section-lead home-houses-lead">
+      Осетровый, Окский и Еловый — три характера одного спокойного отдыха.
+      Выберите настроение, а подробности посмотрите на странице домика.
+    </p>
+
+    <a class="button outline" href="houses.html">
+      Открыть каталог домиков
+    </a>
 
   </div>
 
@@ -396,7 +405,7 @@
         </p>
 
 
-        <ul>
+        <ul hidden>
 
           <li>
             До 4 гостей
@@ -429,11 +438,10 @@
 
 
         <a
-          class="button outline choose-house"
-          href="#booking"
-          data-house="Осетровый"
+          class="button outline"
+          href="house-osetrovy.html"
         >
-          Выбрать
+          Подробнее
         </a>
 
       </div>
@@ -473,7 +481,7 @@
         </p>
 
 
-        <ul>
+        <ul hidden>
 
           <li>
             До 4 гостей
@@ -506,11 +514,10 @@
 
 
         <a
-          class="button outline choose-house"
-          href="#booking"
-          data-house="Окский"
+          class="button outline"
+          href="house-oksky.html"
         >
-          Выбрать
+          Подробнее
         </a>
 
       </div>
@@ -550,7 +557,7 @@
         </p>
 
 
-        <ul>
+        <ul hidden>
 
           <li>
             До 4 гостей
@@ -583,11 +590,10 @@
 
 
         <a
-          class="button outline choose-house"
-          href="#booking"
-          data-house="Еловый"
+          class="button outline"
+          href="house-elovy.html"
         >
-          Выбрать
+          Подробнее
         </a>
 
       </div>
@@ -598,8 +604,8 @@
 
 
   <p class="photo-note reveal">
-    После фотосессии у каждого домика
-    будет собственная фотогалерея.
+    Фотографии, планировка и полное оснащение —
+    на личной странице каждого домика.
   </p>
 
 </section>
@@ -619,24 +625,21 @@
 
 
     <h2>
-      Всё для комфортного отдыха
+      Тишина и комфорт внутри
     </h2>
 
 
     <p>
 
-      На первом и втором этажах
-      расположены спальни.
-
-      Просторная кухня-гостиная
-      объединяет зону отдыха
-      с диванами, столом
-      и телевизором.
+      В каждом домике есть пространство для спокойного отдыха,
+      тёплых вечеров и времени вместе.
+      Планировку и полное оснащение можно посмотреть
+      на личной странице выбранного домика.
 
     </p>
 
 
-    <div class="amenities">
+    <div class="amenities" hidden>
 
       <span>2 спальни</span>
 
@@ -657,6 +660,11 @@
       <span>Посуда и приборы</span>
 
     </div>
+
+
+    <a class="button outline" href="houses.html">
+      Сравнить домики
+    </a>
 
   </div>
 
@@ -862,6 +870,26 @@
 
     </p>
 
+
+    <div
+      class="booking-counter"
+      aria-live="polite"
+    >
+
+      <span class="booking-counter-label">
+        Заявок за всё время
+      </span>
+
+      <strong id="bookingCounter">
+        2 347
+      </strong>
+
+      <span class="booking-counter-note">
+        Каждая новая заявка учитывается автоматически
+      </span>
+
+    </div>
+
   </div>
 
 
@@ -958,10 +986,12 @@
         Телефон
 
         <input
-          id="phone"
-          type="tel"
-          placeholder="+7 999 000-00-00"
-          required
+        id="phone"
+        type="tel"
+        placeholder="+7 999 000-00-00"
+        autocomplete="tel"
+        inputmode="tel"
+        required
         >
 
       </label>
@@ -972,12 +1002,13 @@
 
     <label>
 
-      Имя
+      Имя или ФИО
 
       <input
         id="name"
         type="text"
-        placeholder="Как к вам обращаться"
+        placeholder="Например, Иван Иванов"
+        autocomplete="name"
         required
       >
 
@@ -995,6 +1026,12 @@
       ></textarea>
 
     </label>
+
+
+    <p class="form-privacy-note">
+      Имя и телефон сохраняются в cookie только на этом устройстве,
+      чтобы вам не пришлось вводить их снова.
+    </p>
 
 
     <div class="total">
@@ -1107,7 +1144,7 @@
 
 <script src="config.js"></script>
 
-<script src="script.js?v=8"></script>
+<script src="script.js?v=9"></script>
 
 
 </body>

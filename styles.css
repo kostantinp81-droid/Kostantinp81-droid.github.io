@@ -1649,6 +1649,312 @@ p {
 }
 
 
+.booking-counter {
+
+  display:
+    inline-grid;
+
+  gap:
+    5px;
+
+  min-width:
+    min(100%, 285px);
+
+  margin-top:
+    22px;
+
+  padding:
+    20px 22px;
+
+  overflow:
+    hidden;
+
+  border:
+    1px solid rgba(202, 167, 95, 0.2);
+
+  border-radius:
+    20px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(202, 167, 95, 0.1),
+      rgba(255, 255, 255, 0.025)
+    );
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.035);
+
+}
+
+
+.booking-counter-label,
+.booking-counter-note {
+
+  color:
+    #918d84;
+
+  font-size:
+    12px;
+
+  line-height:
+    1.45;
+
+}
+
+
+.booking-counter-label {
+
+  color:
+    #c9c4ba;
+
+  font-weight:
+    600;
+
+  letter-spacing:
+    0.09em;
+
+  text-transform:
+    uppercase;
+
+}
+
+
+.booking-counter strong {
+
+  color:
+    var(--gold-light);
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size:
+    clamp(38px, 5vw, 52px);
+
+  font-weight:
+    400;
+
+  font-variant-numeric:
+    tabular-nums;
+
+  letter-spacing:
+    -0.035em;
+
+  line-height:
+    1;
+
+  transition:
+    transform 0.25s ease,
+    color 0.25s ease;
+
+}
+
+
+.booking-counter.is-updated strong {
+
+  color:
+    #fff1bd;
+
+  transform:
+    translateY(-2px) scale(1.025);
+
+}
+
+
+/* Золотая гравировка, которая покрывается медной патиной. */
+.oxidation-ornament {
+
+  position:
+    fixed;
+
+  z-index:
+    1200;
+
+  width:
+    118px;
+
+  height:
+    118px;
+
+  color:
+    #e4bd63;
+
+  pointer-events:
+    none;
+
+  transform-origin:
+    center;
+
+  animation:
+    oxidation-bloom 1.15s cubic-bezier(0.2, 0.72, 0.2, 1) forwards;
+
+}
+
+
+.oxidation-ornament svg {
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  overflow:
+    visible;
+
+  filter:
+    drop-shadow(0 0 8px currentColor);
+
+  transform:
+    rotate(-10deg);
+
+  animation:
+    oxidation-turn 1.15s ease-out forwards;
+
+}
+
+
+.oxidation-ring,
+.oxidation-leaf,
+.oxidation-curl {
+
+  fill:
+    none;
+
+  stroke:
+    currentColor;
+
+  stroke-linecap:
+    round;
+
+  stroke-linejoin:
+    round;
+
+  vector-effect:
+    non-scaling-stroke;
+
+}
+
+
+.oxidation-ring {
+
+  stroke-width:
+    0.9;
+
+  stroke-dasharray:
+    5 5;
+
+}
+
+
+.oxidation-ring-inner {
+
+  stroke-dasharray:
+    2 4;
+
+}
+
+
+.oxidation-leaf {
+
+  stroke-width:
+    1.15;
+
+}
+
+
+.oxidation-leaf path:first-child {
+
+  fill:
+    currentColor;
+
+  fill-opacity:
+    0.1;
+
+}
+
+
+.oxidation-curl {
+
+  stroke-width:
+    1.25;
+
+  stroke-dasharray:
+    42;
+
+  stroke-dashoffset:
+    42;
+
+  animation:
+    oxidation-carve 0.75s 0.08s ease-out forwards;
+
+}
+
+
+.oxidation-core {
+
+  fill:
+    currentColor;
+
+}
+
+
+@keyframes oxidation-bloom {
+
+  0% {
+    opacity: 0;
+    color: #e8c56f;
+    transform: translate(-50%, -50%) scale(0.28);
+  }
+
+  28% {
+    opacity: 0.92;
+    color: #edcf7c;
+  }
+
+  62% {
+    opacity: 0.82;
+    color: #a4a263;
+  }
+
+  82% {
+    opacity: 0.58;
+    color: #4e8b76;
+  }
+
+  100% {
+    opacity: 0;
+    color: #2f7467;
+    transform: translate(-50%, -50%) scale(1.18);
+  }
+
+}
+
+
+@keyframes oxidation-turn {
+
+  from {
+    transform: rotate(-12deg);
+  }
+
+  to {
+    transform: rotate(7deg);
+  }
+
+}
+
+
+@keyframes oxidation-carve {
+
+  to {
+    stroke-dashoffset: 0;
+  }
+
+}
+
+
 .booking form {
 
   padding:
@@ -3533,6 +3839,10 @@ footer {
     border-radius: 22px;
   }
 
+  .booking-counter {
+    width: 100%;
+  }
+
   .contacts {
     width: calc(100% - 16px);
     margin-block: 48px;
@@ -3546,3 +3856,556 @@ footer {
 }
 
 /* КОНЕЦ СОВРЕМЕННОГО ОБНОВЛЕНИЯ */
+
+
+/* =========================
+   КАТАЛОГ И СТРАНИЦЫ ДОМИКОВ
+   ========================= */
+
+[hidden] {
+  display: none !important;
+}
+
+.form-privacy-note {
+  margin: -3px 0 20px;
+  color: #77766f;
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.home-houses-lead {
+  max-width: 720px;
+  color: #aaa59c;
+}
+
+.subpage-main {
+  min-height: 75vh;
+}
+
+.houses-page,
+.house-page {
+  background:
+    radial-gradient(circle at 12% 8%, rgba(202, 167, 95, 0.075), transparent 30rem),
+    radial-gradient(circle at 92% 65%, rgba(52, 114, 91, 0.055), transparent 34rem),
+    var(--bg);
+}
+
+.catalog-hero {
+  max-width: 920px;
+  padding-top: clamp(78px, 10vw, 138px);
+  padding-bottom: 54px;
+  text-align: center;
+}
+
+.catalog-hero h1,
+.house-detail-heading h1 {
+  margin-bottom: 20px;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(70px, 13vw, 146px);
+  font-weight: 600;
+  letter-spacing: -0.055em;
+  line-height: 0.84;
+}
+
+.catalog-lead {
+  max-width: 720px;
+  margin: 0 auto;
+  color: #b8b3aa;
+  font-size: clamp(16px, 2vw, 20px);
+  line-height: 1.75;
+  text-wrap: balance;
+}
+
+.houses-catalog {
+  width: min(calc(100% - 24px), calc(var(--max) + 84px));
+  padding: 0 0 92px;
+}
+
+.houses-catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.house-catalog-card {
+  display: block;
+  overflow: hidden;
+  color: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  border-radius: 30px;
+  background: linear-gradient(155deg, rgba(24, 26, 21, 0.98), rgba(9, 10, 8, 0.98));
+  box-shadow: 0 26px 80px rgba(0, 0, 0, 0.22);
+  transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.house-catalog-card:hover {
+  transform: translateY(-7px);
+  border-color: rgba(240, 211, 146, 0.25);
+  box-shadow: 0 36px 100px rgba(0, 0, 0, 0.34);
+}
+
+.house-catalog-photo {
+  position: relative;
+  margin: 10px 10px 0;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  border-radius: 21px;
+}
+
+.house-catalog-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.2, 0.75, 0.2, 1), filter 0.5s ease;
+}
+
+.house-catalog-photo-oksky img {
+  object-position: 43% center;
+}
+
+.house-catalog-photo-elovy img {
+  object-position: 70% center;
+}
+
+.house-catalog-card:hover img {
+  transform: scale(1.035);
+  filter: saturate(1.06);
+}
+
+.house-catalog-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(4, 5, 4, 0.58), transparent 52%);
+}
+
+.house-catalog-symbol {
+  position: absolute;
+  z-index: 1;
+  right: 20px;
+  bottom: 16px;
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  color: var(--gold-light);
+  border: 1px solid rgba(240, 211, 146, 0.34);
+  border-radius: 50%;
+  background: rgba(7, 8, 6, 0.56);
+  backdrop-filter: blur(12px);
+}
+
+.house-catalog-copy {
+  padding: 28px 30px 32px;
+}
+
+.house-catalog-copy h2 {
+  margin-bottom: 10px;
+  font-size: clamp(42px, 5vw, 56px);
+}
+
+.house-catalog-copy > p:not(.eyebrow) {
+  min-height: 48px;
+  color: #aaa59c;
+}
+
+.catalog-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 28px;
+  padding-top: 18px;
+  color: var(--gold-light);
+  border-top: 1px solid rgba(255, 255, 255, 0.065);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.catalog-booking,
+.house-detail-booking {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  width: min(calc(100% - 24px), var(--max));
+  margin-bottom: 72px;
+  padding: clamp(34px, 6vw, 70px);
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  border-radius: 34px;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(202, 167, 95, 0.1), transparent 22rem),
+    rgba(255, 255, 255, 0.022);
+}
+
+.catalog-booking > div,
+.house-detail-booking > div {
+  max-width: 720px;
+}
+
+.catalog-booking h2,
+.house-detail-booking h2 {
+  margin-bottom: 12px;
+  font-size: clamp(44px, 7vw, 72px);
+}
+
+.catalog-booking p:last-child,
+.house-detail-booking p:last-child {
+  margin-bottom: 0;
+  color: #aaa59c;
+}
+
+.house-detail-hero {
+  position: relative;
+  width: min(calc(100% - 24px), 1500px);
+  min-height: min(760px, 82svh);
+  margin: 12px auto 0;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  border-radius: 34px;
+  background: #111;
+}
+
+.house-detail-hero > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.house-page-oksky .house-detail-hero > img {
+  object-position: 43% center;
+}
+
+.house-page-elovy .house-detail-hero > img {
+  object-position: 70% center;
+}
+
+.house-detail-shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(3, 4, 3, 0.88) 0%, rgba(3, 4, 3, 0.4) 50%, transparent 80%),
+    linear-gradient(to top, rgba(3, 4, 3, 0.86), transparent 64%);
+}
+
+.house-detail-heading {
+  position: absolute;
+  z-index: 1;
+  left: clamp(28px, 7vw, 112px);
+  right: 28px;
+  bottom: clamp(42px, 8vw, 104px);
+  max-width: 900px;
+}
+
+.house-detail-heading > p:last-child {
+  margin-bottom: 0;
+  color: rgba(244, 241, 232, 0.82);
+  font-size: clamp(17px, 2.2vw, 24px);
+}
+
+.breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 34px;
+  color: rgba(244, 241, 232, 0.58);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.breadcrumbs a:hover {
+  color: var(--gold-light);
+}
+
+.house-detail-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  align-items: end;
+  gap: clamp(40px, 8vw, 120px);
+}
+
+.house-detail-intro h2 {
+  margin-bottom: 0;
+}
+
+.house-detail-intro > p {
+  margin-bottom: 14px;
+  color: #b6b2aa;
+  font-size: clamp(17px, 2vw, 21px);
+  line-height: 1.75;
+}
+
+.house-detail-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
+  align-items: center;
+  gap: clamp(38px, 7vw, 92px);
+  width: min(calc(100% - 24px), calc(var(--max) + 84px));
+  padding: 18px clamp(28px, 6vw, 76px) 18px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  border-radius: 38px;
+  background: linear-gradient(145deg, rgba(23, 25, 20, 0.94), rgba(10, 11, 9, 0.96));
+}
+
+.house-detail-layout > img {
+  width: 100%;
+  min-height: 610px;
+  object-fit: cover;
+  border-radius: 27px;
+}
+
+.house-detail-layout p:not(.eyebrow) {
+  color: #aaa59c;
+}
+
+.house-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+  margin: 32px 0 0;
+}
+
+.house-facts div {
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.065);
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.022);
+}
+
+.house-facts dt {
+  margin-bottom: 7px;
+  color: #77766f;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.house-facts dd {
+  margin: 0;
+  color: #e8e2d7;
+  font-size: 14px;
+}
+
+.house-equipment {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.7fr) minmax(0, 1.3fr);
+  gap: clamp(38px, 8vw, 112px);
+  align-items: start;
+}
+
+.house-equipment h2 {
+  margin-bottom: 0;
+}
+
+.equipment-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.equipment-grid li {
+  position: relative;
+  padding: 18px 18px 18px 42px;
+  color: #cbc7bd;
+  border: 1px solid rgba(255, 255, 255, 0.065);
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.equipment-grid li::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  width: 6px;
+  height: 6px;
+  border: 1px solid var(--gold);
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.house-mini-gallery {
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr 0.75fr;
+  gap: 12px;
+  width: min(calc(100% - 24px), calc(var(--max) + 84px));
+  padding-block: 40px 120px;
+}
+
+.house-mini-gallery figure {
+  min-height: 420px;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 26px;
+}
+
+.house-mini-gallery img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.house-detail-booking {
+  margin-top: 0;
+}
+
+.house-next {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  padding-block: 10px 100px;
+}
+
+.house-next a {
+  color: var(--gold-light);
+  font-size: 13px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+  .houses-catalog-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .house-catalog-card {
+    display: grid;
+    grid-template-columns: minmax(220px, 0.9fr) minmax(0, 1.1fr);
+  }
+
+  .house-catalog-photo {
+    aspect-ratio: 4 / 3;
+    margin: 10px 0 10px 10px;
+  }
+
+  .house-detail-intro,
+  .house-detail-layout,
+  .house-equipment {
+    grid-template-columns: 1fr;
+  }
+
+  .house-detail-layout {
+    padding: 14px 14px 36px;
+  }
+
+  .house-detail-layout > img {
+    min-height: 0;
+    max-height: 680px;
+  }
+
+  .house-detail-layout > div {
+    padding: 16px 12px 0;
+  }
+
+  .house-mini-gallery {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .house-mini-gallery figure:first-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 600px) {
+  .catalog-hero {
+    padding-top: 72px;
+  }
+
+  .houses-catalog {
+    width: calc(100% - 16px);
+  }
+
+  .house-catalog-card {
+    display: block;
+    border-radius: 24px;
+  }
+
+  .house-catalog-photo {
+    margin: 8px 8px 0;
+    aspect-ratio: 5 / 4;
+    border-radius: 18px;
+  }
+
+  .house-catalog-copy {
+    padding: 24px 22px 28px;
+  }
+
+  .house-catalog-copy > p:not(.eyebrow) {
+    min-height: 0;
+  }
+
+  .catalog-booking,
+  .house-detail-booking {
+    align-items: stretch;
+    flex-direction: column;
+    width: calc(100% - 16px);
+    padding: 28px 22px;
+    border-radius: 26px;
+  }
+
+  .house-detail-hero {
+    width: calc(100% - 16px);
+    min-height: 70svh;
+    margin-top: 8px;
+    border-radius: 26px;
+  }
+
+  .house-detail-shade {
+    background: linear-gradient(to top, rgba(3, 4, 3, 0.94), rgba(3, 4, 3, 0.18) 76%);
+  }
+
+  .house-detail-heading {
+    left: 22px;
+    right: 22px;
+    bottom: 36px;
+  }
+
+  .breadcrumbs {
+    margin-bottom: 24px;
+  }
+
+  .house-detail-intro {
+    gap: 24px;
+  }
+
+  .house-detail-layout {
+    width: calc(100% - 16px);
+    border-radius: 28px;
+  }
+
+  .house-facts,
+  .equipment-grid,
+  .house-mini-gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .house-mini-gallery {
+    width: calc(100% - 16px);
+    padding-bottom: 92px;
+  }
+
+  .house-mini-gallery figure,
+  .house-mini-gallery figure:first-child {
+    grid-column: auto;
+    min-height: 300px;
+    border-radius: 21px;
+  }
+
+  .house-next {
+    align-items: flex-start;
+    flex-direction: column;
+    padding-bottom: 72px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .oxidation-ornament {
+    display: none;
+  }
+}
