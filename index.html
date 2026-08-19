@@ -57,7 +57,7 @@
   >
   <meta
     property="og:image"
-    content="https://www.xn--80admnftapige.xn--p1ai/assets/cabin-exterior.jpg"
+    content="https://www.xn--80admnftapige.xn--p1ai/assets/river-sunset.jpg"
   >
 
   <meta name="twitter:card" content="summary_large_image">
@@ -68,7 +68,7 @@
   >
   <meta
     name="twitter:image"
-    content="https://www.xn--80admnftapige.xn--p1ai/assets/cabin-exterior.jpg"
+    content="https://www.xn--80admnftapige.xn--p1ai/assets/river-sunset.jpg"
   >
 
   <script>
@@ -87,7 +87,7 @@
       "description": "Уютные домики с собственным чаном на берегу Оки в селе Жайск Нижегородской области.",
       "url": "https://www.xn--80admnftapige.xn--p1ai/",
       "logo": "https://www.xn--80admnftapige.xn--p1ai/assets/logo.png",
-      "image": "https://www.xn--80admnftapige.xn--p1ai/assets/cabin-exterior.jpg",
+      "image": "https://www.xn--80admnftapige.xn--p1ai/assets/river-sunset.jpg",
       "telephone": "+79200540303",
       "priceRange": "10 000 ₽ за сутки",
       "address": {
@@ -101,13 +101,14 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="image" href="assets/river-sunset.jpg" fetchpriority="high">
 
   <link
     href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600&display=swap"
     rel="stylesheet"
   >
 
-  <link rel="stylesheet" href="styles.css?v=11">
+  <link rel="stylesheet" href="styles.css?v=12">
 </head>
 
 
@@ -380,8 +381,10 @@
       <div class="card-photo">
 
         <img
-          src="assets/cabin-exterior.jpg"
-          alt="Домик Осетровый"
+          src="assets/cabin-front.jpg"
+          alt="Домик A-frame с террасой"
+          width="1152"
+          height="1536"
           loading="lazy"
           decoding="async"
         >
@@ -457,7 +460,9 @@
 
         <img
           src="assets/cabin-exterior.jpg"
-          alt="Домик Окский"
+          alt="Домик среди сосен"
+          width="1152"
+          height="1536"
           loading="lazy"
           decoding="async"
         >
@@ -532,8 +537,10 @@
       <div class="card-photo">
 
         <img
-          src="assets/cabin-exterior.jpg"
-          alt="Домик Еловый"
+          src="assets/cabin-living.jpg"
+          alt="Светлая гостиная в домике"
+          width="1152"
+          height="1536"
           loading="lazy"
           decoding="async"
         >
@@ -671,11 +678,88 @@
 
   <img
     class="reveal"
-    src="assets/cabin-interior.jpg"
-    alt="Интерьер домика"
+    src="assets/cabin-living.jpg"
+    alt="Гостиная с панорамными окнами в домике"
+    width="1152"
+    height="1536"
     loading="lazy"
     decoding="async"
   >
+
+</section>
+
+
+<!-- =========================
+     ФОТОГРАФИИ
+     ========================= -->
+
+<section class="section photo-story" aria-labelledby="photoStoryTitle">
+
+  <div class="photo-story-heading reveal">
+
+    <div>
+      <p class="eyebrow">Настоящий Жайск</p>
+      <h2 id="photoStoryTitle">От рассвета до огня</h2>
+    </div>
+
+    <p>
+      Тёплый дом, беседка среди сосен и неспешный вечер у мангала —
+      несколько честных кадров из жизни Острова Жайск.
+    </p>
+
+  </div>
+
+  <div class="photo-story-grid">
+
+    <figure class="photo-story-wide reveal">
+      <img
+        src="assets/gazebo.jpg"
+        alt="Беседка и шезлонги среди сосен"
+        width="1536"
+        height="1152"
+        loading="lazy"
+        decoding="async"
+      >
+      <figcaption>Тихий отдых на свежем воздухе</figcaption>
+    </figure>
+
+    <figure class="reveal">
+      <img
+        src="assets/cabin-front.jpg"
+        alt="Фасад домика A-frame"
+        width="1152"
+        height="1536"
+        loading="lazy"
+        decoding="async"
+      >
+      <figcaption>Домики среди деревьев</figcaption>
+    </figure>
+
+    <figure class="reveal">
+      <img
+        src="assets/cabin-living.jpg"
+        alt="Светлая гостиная с деревянной отделкой"
+        width="1152"
+        height="1536"
+        loading="lazy"
+        decoding="async"
+      >
+      <figcaption>Свет и тепло внутри</figcaption>
+    </figure>
+
+    <figure class="reveal">
+      <img
+        src="assets/barbecue.jpg"
+        alt="Ужин на мангале"
+        width="1152"
+        height="1536"
+        loading="lazy"
+        decoding="async"
+      >
+      <figcaption>Вечер у огня</figcaption>
+    </figure>
+
+  </div>
 
 </section>
 

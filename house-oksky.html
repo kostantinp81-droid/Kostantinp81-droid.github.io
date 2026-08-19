@@ -32,7 +32,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=11">
+  <link rel="stylesheet" href="styles.css?v=12">
 </head>
 
 <body class="house-page house-page-oksky">
@@ -58,7 +58,14 @@
 
   <main id="houseContent" class="subpage-main">
     <section class="house-detail-hero">
-      <img src="assets/cabin-exterior.jpg" alt="Домик Окский снаружи">
+      <img
+        src="assets/cabin-exterior.jpg"
+        alt="Домик Окский снаружи"
+        width="1152"
+        height="1536"
+        decoding="async"
+        fetchpriority="high"
+      >
       <div class="house-detail-shade"></div>
       <div class="house-detail-heading reveal">
         <nav class="breadcrumbs" aria-label="Хлебные крошки">
@@ -80,7 +87,15 @@
     </section>
 
     <section class="section house-detail-layout">
-      <img class="reveal" src="assets/cabin-interior.jpg" alt="Интерьер домика Окский" loading="lazy">
+      <img
+        class="reveal"
+        src="assets/cabin-living.jpg"
+        alt="Кухня-гостиная домика Окский"
+        width="1152"
+        height="1536"
+        loading="lazy"
+        decoding="async"
+      >
       <div class="reveal">
         <p class="eyebrow">Планировка</p>
         <h2>Удобно для компании до четырёх гостей</h2>
@@ -103,9 +118,9 @@
     </section>
 
     <section class="section house-mini-gallery reveal" aria-label="Фотографии домика и отдыха">
-      <figure><img src="assets/cabin-exterior.jpg" alt="Домик Окский" loading="lazy"></figure>
-      <figure><img src="assets/cabin-interior.jpg" alt="Интерьер домика" loading="lazy"></figure>
-      <figure><img src="assets/hot-tub-2.jpg" alt="Дровяной чан у домика" loading="lazy"></figure>
+      <figure><img src="assets/cabin-bedroom.jpg" alt="Спальня в домике" width="1152" height="1536" loading="lazy" decoding="async"></figure>
+      <figure><img src="assets/cabin-bathroom.jpg" alt="Душ и туалет в домике" width="1152" height="1536" loading="lazy" decoding="async"></figure>
+      <figure><img src="assets/hot-tub-2.jpg" alt="Дровяной чан у домика" width="1152" height="1536" loading="lazy" decoding="async"></figure>
     </section>
 
     <section class="section house-detail-booking reveal">

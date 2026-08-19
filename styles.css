@@ -818,9 +818,9 @@ p {
 
   background:
     url(
-      "assets/cabin-exterior.jpg"
+      "assets/river-sunset.jpg"
     )
-    center 45%
+    center 56%
     /
     cover
     no-repeat;
@@ -3541,6 +3541,104 @@ body {
 }
 
 
+.photo-story {
+  width: min(calc(100% - 24px), calc(var(--max) + 84px));
+  padding-block: 132px;
+}
+
+
+.photo-story-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  align-items: end;
+  gap: clamp(36px, 8vw, 112px);
+  margin-bottom: 42px;
+}
+
+
+.photo-story-heading h2,
+.photo-story-heading p {
+  margin-bottom: 0;
+}
+
+
+.photo-story-heading > p {
+  color: #aaa59c;
+  font-size: clamp(16px, 1.8vw, 20px);
+  line-height: 1.75;
+}
+
+
+.photo-story-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+
+.photo-story-grid figure {
+  position: relative;
+  height: clamp(360px, 38vw, 520px);
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  border-radius: 26px;
+  background: #10110e;
+}
+
+
+.photo-story-grid .photo-story-wide {
+  grid-column: 1 / -1;
+  height: clamp(380px, 48vw, 650px);
+}
+
+
+.photo-story-grid figure::after {
+  content: "";
+  position: absolute;
+  inset: 45% 0 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(2, 3, 2, 0.82), transparent);
+}
+
+
+.photo-story-grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s ease;
+}
+
+
+.photo-story-grid .photo-story-wide img {
+  object-position: center 54%;
+}
+
+
+.photo-story-grid figure:nth-child(2) img {
+  object-position: center 42%;
+}
+
+
+.photo-story-grid figure:hover img {
+  transform: scale(1.025);
+}
+
+
+.photo-story-grid figcaption {
+  position: absolute;
+  z-index: 2;
+  right: 24px;
+  bottom: 22px;
+  left: 24px;
+  color: rgba(244, 241, 232, 0.9);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+
 .story {
   max-width: 980px;
   padding-block: 150px;
@@ -3780,6 +3878,11 @@ footer {
     min-height: 0;
     padding: 24px 4px;
   }
+
+  .photo-story-heading {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
 }
 
 
@@ -3860,6 +3963,36 @@ footer {
 
   .story {
     padding-block: 105px;
+  }
+
+  .photo-story {
+    width: calc(100% - 16px);
+    padding-block: 92px;
+  }
+
+  .photo-story-heading {
+    padding-inline: 8px;
+  }
+
+  .photo-story-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .photo-story-grid .photo-story-wide {
+    grid-column: auto;
+    height: 330px;
+  }
+
+  .photo-story-grid figure {
+    height: 430px;
+    border-radius: 22px;
+  }
+
+  .photo-story-grid figcaption {
+    right: 18px;
+    bottom: 18px;
+    left: 18px;
   }
 
   .booking.section {
