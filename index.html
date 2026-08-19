@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Мой сайт</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #111827;
+            color: white;
+        }
+
+        header {
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #0f172a;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+        }
+
+        .hero {
+            min-height: 80vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: #cbd5e1;
+            margin-bottom: 30px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 18px;
+        }
+
+        .button:hover {
+            background: #1d4ed8;
+        }
+
+        section {
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        section h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        section p {
+            color: #cbd5e1;
+            max-width: 700px;
+            margin: auto;
+            line-height: 1.7;
+        }
+
+        footer {
+            padding: 30px;
+            text-align: center;
+            background: #0f172a;
+            color: #94a3b8;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 20px;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 38px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">МОЙ САЙТ</div>
+
+        <nav>
+            <a href="#about">О нас</a>
+            <a href="#contacts">Контакты</a>
+        </nav>
+    </header>
+
+    <main>
+
+        <section class="hero">
+            <div>
+                <h1>Добро пожаловать!</h1>
+
+                <p>
+                    Здесь будет главный текст твоего сайта.
+                    Мы можем полностью заменить его на информацию о тебе или твоём бизнесе.
+                </p>
+
+                <a href="#contacts" class="button">
+                    Связаться
+                </a>
+            </div>
+        </section>
+
+        <section id="about">
+            <h2>О нас</h2>
+
+            <p>
+                Здесь можно рассказать о компании, услугах,
+                проекте или о себе.
+            </p>
+        </section>
+
+        <section id="contacts">
+            <h2>Контакты</h2>
+
+            <p>
+                Здесь будут твои контакты и способы связи.
+            </p>
+        </section>
+
+    </main>
+
+    <footer>
+        © 2026 Мой сайт
+    </footer>
+
+</body>
+</html>
