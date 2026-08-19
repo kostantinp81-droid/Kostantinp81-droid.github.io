@@ -1,11 +1,13 @@
 const PRICE = 10000;
 const BOOKING_API_URL =
-  'https://api.островжайск.рф/telegram.php';
+  'https://api.xn--80admnftapige.xn--p1ai/telegram.php';
 const DEFAULT_BOOKING_COUNT = 2347;
 const APPLICATIONS_STORAGE_KEY =
   'ostrov-zhaisk-applications-v1';
 const CONTACT_DETAILS_COOKIE =
   'ostrov_zhaisk_contact_v1';
+const VISITOR_ID_COOKIE =
+  'ostrov_zhaisk_visitor_v1';
 
 function readApplications() {
   try {
@@ -200,16 +202,99 @@ if (phoneInput) {
   phoneInput.addEventListener('input', saveContactDetails);
 }
 
+function readCookieValue(name) {
+  const prefix = `${name}=`;
+  const item = document.cookie
+    .split(';')
+    .map((part) => part.trim())
+    .find((part) => part.startsWith(prefix));
+
+  return item
+    ? decodeURIComponent(item.slice(prefix.length))
+    : '';
+}
+
+function createVisitorId() {
+  const bytes = new Uint8Array(16);
+
+  if (window.crypto && window.crypto.getRandomValues) {
+    window.crypto.getRandomValues(bytes);
+
+    return Array.from(bytes, (value) =>
+      value.toString(16).padStart(2, '0')
+    ).join('');
+  }
+
+  return (
+    Date.now().toString(16) +
+    Math.random().toString(16).slice(2) +
+    Math.random().toString(16).slice(2)
+  ).slice(0, 32).padEnd(32, '0');
+}
+
+function getVisitorId() {
+  const saved = readCookieValue(VISITOR_ID_COOKIE);
+
+  if (/^[a-f0-9]{32}$/.test(saved)) {
+    return saved;
+  }
+
+  const visitorId = createVisitorId();
+  const secure = window.location.protocol === 'https:'
+    ? '; Secure'
+    : '';
+
+  document.cookie =
+    `${VISITOR_ID_COOKIE}=${visitorId}; ` +
+    `Max-Age=31536000; Path=/; SameSite=Lax${secure}`;
+
+  return visitorId;
+}
+
+function sendAnalyticsPing(eventName) {
+  const data = new FormData();
+  data.append('action', 'analytics_ping');
+  data.append('visitor_id', getVisitorId());
+  data.append('event', eventName);
+  data.append(
+    'path',
+    window.location.pathname.slice(0, 160)
+  );
+
+  try {
+    const request = fetch(BOOKING_API_URL, {
+      method: 'POST',
+      body: data,
+      credentials: 'omit',
+      keepalive: true
+    });
+
+    request.catch((error) => {
+      console.error('Не удалось обновить статистику:', error);
+    });
+  } catch (error) {
+    console.error('Не удалось обновить статистику:', error);
+  }
+}
+
+sendAnalyticsPing('pageview');
+
+window.setInterval(() => {
+  if (document.visibilityState === 'visible') {
+    sendAnalyticsPing('heartbeat');
+  }
+}, 30000);
+
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') {
+    sendAnalyticsPing('heartbeat');
+  }
+});
+
 const oxidationTriggerSelector =
   'button, .button, .nav-cta, .house-catalog-card, input, select, textarea';
 
 function showOxidationOrnament(x, y) {
-  if (
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  ) {
-    return;
-  }
-
   const ornament = document.createElement('span');
   ornament.className = 'oxidation-ornament';
   ornament.setAttribute('aria-hidden', 'true');
@@ -538,15 +623,37 @@ const revealElements =
 const heroSection =
   document.querySelector('.hero');
 
-const reducedMotion =
-  window.matchMedia(
-    '(prefers-reduced-motion: reduce)'
-  ).matches;
+function revealVisibleElements() {
+  const viewportHeight =
+    window.innerHeight ||
+    document.documentElement.clientHeight;
 
-if (
-  reducedMotion ||
-  !('IntersectionObserver' in window)
-) {
+  revealElements.forEach((element) => {
+    if (element.classList.contains('is-visible')) return;
+
+    const bounds = element.getBoundingClientRect();
+
+    if (
+      bounds.top <= viewportHeight * 0.92 &&
+      bounds.bottom >= 0
+    ) {
+      element.classList.add('is-visible');
+    }
+  });
+
+  if (heroSection) {
+    const heroBounds = heroSection.getBoundingClientRect();
+
+    if (
+      heroBounds.top <= viewportHeight * 0.92 &&
+      heroBounds.bottom >= 0
+    ) {
+      heroSection.classList.add('is-visible');
+    }
+  }
+}
+
+if (!('IntersectionObserver' in window)) {
 
   revealElements.forEach((element) => {
     element.classList.add('is-visible');
@@ -604,6 +711,27 @@ if (
   }
 
 }
+
+let revealFrame = 0;
+
+function scheduleRevealCheck() {
+  if (revealFrame) return;
+
+  revealFrame = window.requestAnimationFrame(() => {
+    revealFrame = 0;
+    revealVisibleElements();
+  });
+}
+
+window.addEventListener('scroll', scheduleRevealCheck, {
+  passive: true
+});
+window.addEventListener('resize', scheduleRevealCheck);
+window.addEventListener('orientationchange', scheduleRevealCheck);
+window.addEventListener('pageshow', scheduleRevealCheck);
+
+revealVisibleElements();
+window.setTimeout(revealVisibleElements, 900);
 
 
 /* =========================
