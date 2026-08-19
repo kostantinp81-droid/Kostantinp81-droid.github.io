@@ -252,7 +252,7 @@ function getVisitorId() {
 }
 
 function sendAnalyticsPing(eventName) {
-  const data = new FormData();
+  const data = new URLSearchParams();
   data.append('action', 'analytics_ping');
   data.append('visitor_id', getVisitorId());
   data.append('event', eventName);
@@ -264,7 +264,11 @@ function sendAnalyticsPing(eventName) {
   try {
     const request = fetch(BOOKING_API_URL, {
       method: 'POST',
-      body: data,
+      body: data.toString(),
+      headers: {
+        'Content-Type':
+          'application/x-www-form-urlencoded;charset=UTF-8'
+      },
       credentials: 'omit',
       keepalive: true
     });
