@@ -82,7 +82,8 @@ function readContactDetails() {
   try {
     const prefix = `${CONTACT_DETAILS_COOKIE}=`;
     const savedCookie = document.cookie
-      .split('; ')
+      .split(';')
+      .map((item) => item.trim())
       .find((item) => item.startsWith(prefix));
 
     if (!savedCookie) return {};
@@ -245,11 +246,14 @@ function showOxidationOrnament(x, y) {
   document.body.appendChild(ornament);
 
   const removeOrnament = () => ornament.remove();
-  ornament.addEventListener(
-    'animationend',
-    removeOrnament,
-    { once: true }
-  );
+  ornament.addEventListener('animationend', (event) => {
+    if (
+      event.target === ornament &&
+      event.animationName === 'oxidation-bloom'
+    ) {
+      removeOrnament();
+    }
+  });
   window.setTimeout(removeOrnament, 1400);
 }
 
