@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: http://xn--80admnftapige.xn--p1ai/sitemap.xml
+Sitemap: https://xn--80admnftapige.xn--p1ai/sitemap.xml
