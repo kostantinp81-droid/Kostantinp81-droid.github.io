@@ -8,6 +8,11 @@ const nightsLabel = document.getElementById('nights');
 const house = document.getElementById('house');
 const statusEl = document.getElementById('formStatus');
 
+const guests = document.getElementById('guests');
+const nameInput = document.getElementById('name');
+const phoneInput = document.getElementById('phone');
+const commentInput = document.getElementById('comment');
+
 const today = new Date();
 today.setHours(0, 0, 0, 0);
 
@@ -21,12 +26,17 @@ function getNights() {
 
   const start = new Date(checkin.value + 'T00:00:00');
   const end = new Date(checkout.value + 'T00:00:00');
+
   const diff = Math.round((end - start) / 86400000);
 
   return diff > 0 ? diff : 1;
 }
 
 function getNightWord(nights) {
+  if (nights % 10 === 1 && nights % 100 !== 11) {
+    return 'сутки';
+  }
+
   return 'суток';
 }
 
@@ -34,6 +44,7 @@ function recalc() {
   if (checkin.value) {
     const minCheckout = new Date(checkin.value + 'T00:00:00');
     minCheckout.setDate(minCheckout.getDate() + 1);
+
     checkout.min = iso(minCheckout);
 
     if (checkout.value && checkout.value <= checkin.value) {
@@ -80,6 +91,7 @@ form.addEventListener('submit', async (event) => {
 
   const nights = getNights();
   const price = nights * PRICE;
+
   const submitButton = form.querySelector('button[type="submit"]');
 
   if (submitButton) {
@@ -91,8 +103,19 @@ form.addEventListener('submit', async (event) => {
     statusEl.textContent = 'Отправляем заявку...';
   }
 
-  const data = new FormData(form);
+  /*
+    Создаём данные вручную.
+    Так PHP точно получит все поля независимо от name в HTML.
+  */
+  const data = new FormData();
 
+  data.append('house', house ? house.value : '');
+  data.append('checkin', checkin ? checkin.value : '');
+  data.append('checkout', checkout ? checkout.value : '');
+  data.append('guests', guests ? guests.value : '');
+  data.append('name', nameInput ? nameInput.value.trim() : '');
+  data.append('phone', phoneInput ? phoneInput.value.trim() : '');
+  data.append('comment', commentInput ? commentInput.value.trim() : '');
   data.append('nights', nights);
   data.append('total', price);
 
@@ -108,13 +131,19 @@ form.addEventListener('submit', async (event) => {
     const result = await response.json();
 
     if (!response.ok || !result.ok) {
-      throw new Error('Ошибка отправки');
+      console.error('Ответ сервера:', result);
+
+      throw new Error(
+        result.error || 'Не удалось отправить заявку'
+      );
     }
 
     if (statusEl) {
       statusEl.innerHTML =
-        'Заявка отправлена! Мы свяжемся с вами для подтверждения бронирования.<br><br>' +
-        'Телефон: <a href="tel:+79200540303"><strong>+7 (920) 054-03-03</strong></a>';
+        '<strong>Заявка отправлена!</strong><br>' +
+        'Мы свяжемся с вами для подтверждения бронирования.<br><br>' +
+        'Телефон: <a href="tel:+79200540303">' +
+        '<strong>+7 (920) 054-03-03</strong></a>';
     }
 
     form.reset();
@@ -125,13 +154,16 @@ form.addEventListener('submit', async (event) => {
     recalc();
 
   } catch (error) {
-    console.error(error);
+    console.error('Ошибка заявки:', error);
 
     if (statusEl) {
       statusEl.innerHTML =
         'Не удалось отправить заявку.<br><br>' +
-        'Позвоните нам: <a href="tel:+79200540303"><strong>+7 (920) 054-03-03</strong></a>';
+        'Позвоните нам: ' +
+        '<a href="tel:+79200540303">' +
+        '<strong>+7 (920) 054-03-03</strong></a>';
     }
+
   } finally {
     if (submitButton) {
       submitButton.disabled = false;
