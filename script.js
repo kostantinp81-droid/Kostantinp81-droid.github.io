@@ -174,10 +174,20 @@ function renderBookingCount(value, animate = false) {
 async function loadBookingCount() {
   if (!bookingCounter) return;
 
+  const controller = 'AbortController' in window
+    ? new AbortController()
+    : null;
+  const timeoutId = controller
+    ? window.setTimeout(() => controller.abort(), 12000)
+    : 0;
+
   try {
     const response = await fetch(
       `${BOOKING_API_URL}?booking_count=1`,
-      { cache: 'no-store' }
+      {
+        cache: 'no-store',
+        signal: controller ? controller.signal : undefined
+      }
     );
     const result = await response.json();
 
@@ -185,10 +195,14 @@ async function loadBookingCount() {
       renderBookingCount(result.count);
     }
   } catch (error) {
+    if (error && error.name === 'AbortError') return;
+
     console.error(
       'Не удалось обновить счётчик заявок:',
       error
     );
+  } finally {
+    if (timeoutId) window.clearTimeout(timeoutId);
   }
 }
 
@@ -261,10 +275,26 @@ function sendAnalyticsPing(eventName) {
     window.location.pathname.slice(0, 160)
   );
 
+  const body = data.toString();
+
   try {
+    if (navigator.sendBeacon) {
+      const payload = new Blob(
+        [body],
+        {
+          type:
+            'application/x-www-form-urlencoded;charset=UTF-8'
+        }
+      );
+
+      if (navigator.sendBeacon(BOOKING_API_URL, payload)) {
+        return;
+      }
+    }
+
     const request = fetch(BOOKING_API_URL, {
       method: 'POST',
-      body: data.toString(),
+      body,
       headers: {
         'Content-Type':
           'application/x-www-form-urlencoded;charset=UTF-8'
@@ -281,7 +311,68 @@ function sendAnalyticsPing(eventName) {
   }
 }
 
-sendAnalyticsPing('pageview');
+function scheduleVisitorAnalytics() {
+  let sent = false;
+  const activityEvents = [
+    'pointerdown',
+    'touchstart',
+    'scroll',
+    'keydown'
+  ];
+
+  const sendPageview = () => {
+    if (sent) return;
+    sent = true;
+
+    activityEvents.forEach((eventName) => {
+      window.removeEventListener(eventName, sendPageview);
+    });
+
+    sendAnalyticsPing('pageview');
+  };
+
+  activityEvents.forEach((eventName) => {
+    window.addEventListener(eventName, sendPageview, {
+      passive: true,
+      once: true
+    });
+  });
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') {
+      sendPageview();
+    }
+  });
+
+  window.addEventListener('pagehide', sendPageview, {
+    once: true
+  });
+
+  window.setTimeout(sendPageview, 15000);
+}
+
+function scheduleBookingCount() {
+  if (!bookingCounter) return;
+
+  const counterCard = bookingCounter.closest('.booking-counter');
+
+  if (!counterCard || !('IntersectionObserver' in window)) {
+    window.setTimeout(loadBookingCount, 2500);
+    return;
+  }
+
+  const counterObserver = new IntersectionObserver(
+    (entries, observer) => {
+      if (!entries[0].isIntersecting) return;
+
+      observer.disconnect();
+      loadBookingCount();
+    },
+    { rootMargin: '350px 0px' }
+  );
+
+  counterObserver.observe(counterCard);
+}
 
 window.setInterval(() => {
   if (document.visibilityState === 'visible') {
@@ -968,4 +1059,5 @@ if (form) {
    ========================= */
 
 recalc();
-loadBookingCount();
+scheduleVisitorAnalytics();
+scheduleBookingCount();

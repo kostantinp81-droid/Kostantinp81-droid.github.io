@@ -34,19 +34,19 @@
 
   <link
     rel="icon"
-    type="image/png"
-    href="assets/logo.png"
+    href="favicon.ico"
+    sizes="any"
   >
 
   <link
     rel="apple-touch-icon"
-    href="assets/logo.png"
+    href="assets/apple-touch-icon.png"
   >
 
   <meta property="og:locale" content="ru_RU">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Остров Жайск">
-  <meta property="og:title" content="Остров Жайск — отдых на берегу Оки">
+  <meta property="og:title" content="Остров Жайск — база отдыха на берегу Оки">
   <meta
     property="og:description"
     content="Уютные домики с собственным чаном на берегу Оки в Нижегородской области."
@@ -59,9 +59,12 @@
     property="og:image"
     content="https://www.xn--80admnftapige.xn--p1ai/assets/river-sunset.jpg"
   >
+  <meta property="og:image:width" content="1536">
+  <meta property="og:image:height" content="1152">
+  <meta property="og:image:alt" content="Вечер на берегу Оки в Острове Жайск">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Остров Жайск — отдых на берегу Оки">
+  <meta name="twitter:title" content="Остров Жайск — база отдыха на берегу Оки">
   <meta
     name="twitter:description"
     content="Уютные домики с собственным чаном на берегу Оки."
@@ -75,7 +78,7 @@
     document.documentElement.classList.add('js');
   </script>
 
-  <title>Остров Жайск — отдых на берегу Оки</title>
+  <title>Остров Жайск — база отдыха на берегу Оки</title>
 
   <script type="application/ld+json">
     {
@@ -87,9 +90,17 @@
       "description": "Уютные домики с собственным чаном на берегу Оки в селе Жайск Нижегородской области.",
       "url": "https://www.xn--80admnftapige.xn--p1ai/",
       "logo": "https://www.xn--80admnftapige.xn--p1ai/assets/logo.png",
-      "image": "https://www.xn--80admnftapige.xn--p1ai/assets/river-sunset.jpg",
+      "image": [
+        "https://www.xn--80admnftapige.xn--p1ai/assets/river-sunset.jpg",
+        "https://www.xn--80admnftapige.xn--p1ai/assets/cabin-front.jpg",
+        "https://www.xn--80admnftapige.xn--p1ai/assets/cabin-living.jpg"
+      ],
       "telephone": "+79200540303",
       "priceRange": "10 000 ₽ за сутки",
+      "sameAs": [
+        "https://yandex.ru/maps/org/ostrov_zhaysk/136532600219/",
+        "https://2gis.ru/firm/70000001112535510"
+      ],
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "село Жайск",
@@ -99,16 +110,15 @@
     }
   </script>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="image" href="assets/river-sunset.jpg" fetchpriority="high">
-
   <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600&display=swap"
-    rel="stylesheet"
+    rel="preload"
+    as="image"
+    href="assets/logo.webp"
+    type="image/webp"
+    fetchpriority="high"
   >
 
-  <link rel="stylesheet" href="styles.css?v=12">
+  <link rel="stylesheet" href="styles.css?v=13">
 </head>
 
 
@@ -145,8 +155,11 @@
 
   <img
     class="intro-logo"
-    src="assets/logo.png"
+    src="assets/logo.webp"
     alt="Остров Жайск"
+    width="768"
+    height="768"
+    fetchpriority="high"
   >
 
   <a
@@ -175,7 +188,7 @@
   <a class="brand" href="#top">
 
     <img
-      src="assets/logo.png"
+      src="assets/logo.webp"
       alt=""
     >
 
@@ -248,7 +261,7 @@
 
     <img
       class="hero-logo"
-      src="assets/logo.png"
+      src="assets/logo.webp"
       alt="Логотип Остров Жайск"
     >
 
@@ -381,7 +394,7 @@
       <div class="card-photo">
 
         <img
-          src="assets/cabin-front.jpg"
+          src="assets/cabin-front.webp"
           alt="Домик A-frame с террасой"
           width="1152"
           height="1536"
@@ -459,7 +472,7 @@
       <div class="card-photo">
 
         <img
-          src="assets/cabin-exterior.jpg"
+          src="assets/cabin-exterior.webp"
           alt="Домик среди сосен"
           width="1152"
           height="1536"
@@ -537,7 +550,7 @@
       <div class="card-photo">
 
         <img
-          src="assets/cabin-living.jpg"
+          src="assets/cabin-living.webp"
           alt="Светлая гостиная в домике"
           width="1152"
           height="1536"
@@ -678,7 +691,7 @@
 
   <img
     class="reveal"
-    src="assets/cabin-living.jpg"
+    src="assets/cabin-living.webp"
     alt="Гостиная с панорамными окнами в домике"
     width="1152"
     height="1536"
@@ -713,7 +726,7 @@
 
     <figure class="photo-story-wide reveal">
       <img
-        src="assets/gazebo.jpg"
+        src="assets/gazebo.webp"
         alt="Беседка и шезлонги среди сосен"
         width="1536"
         height="1152"
@@ -725,7 +738,7 @@
 
     <figure class="reveal">
       <img
-        src="assets/cabin-front.jpg"
+        src="assets/cabin-front.webp"
         alt="Фасад домика A-frame"
         width="1152"
         height="1536"
@@ -737,7 +750,7 @@
 
     <figure class="reveal">
       <img
-        src="assets/cabin-living.jpg"
+        src="assets/cabin-living.webp"
         alt="Светлая гостиная с деревянной отделкой"
         width="1152"
         height="1536"
@@ -749,7 +762,7 @@
 
     <figure class="reveal">
       <img
-        src="assets/barbecue.jpg"
+        src="assets/barbecue.webp"
         alt="Ужин на мангале"
         width="1152"
         height="1536"
@@ -792,8 +805,10 @@
     <article class="reveal">
 
       <img
-        src="assets/hot-tub-1.jpg"
+        src="assets/hot-tub-1.webp"
         alt="Дровяной чан"
+        width="864"
+        height="1152"
         loading="lazy"
         decoding="async"
       >
@@ -1208,7 +1223,7 @@
   <div class="brand">
 
     <img
-      src="assets/logo.png"
+      src="assets/logo.webp"
       alt=""
     >
 
@@ -1228,7 +1243,7 @@
 
 <script src="config.js"></script>
 
-<script src="script.js?v=12"></script>
+<script src="script.js?v=13"></script>
 
 
 </body>
