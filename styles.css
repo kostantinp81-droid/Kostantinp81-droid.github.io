@@ -333,319 +333,6 @@ p {
 
 
 /* =========================
-   ПЕРВЫЙ ЧЁРНЫЙ ЭКРАН
-   ========================= */
-
-
-.intro-screen {
-
-  position:
-    relative;
-
-  width:
-    100%;
-
-  min-height:
-    100vh;
-
-  min-height:
-    100svh;
-
-  display:
-    grid;
-
-  place-items:
-    center;
-
-  overflow:
-    hidden;
-
-  background:
-    #000;
-
-}
-
-
-.intro-glow {
-
-  position:
-    absolute;
-
-  width:
-    70vw;
-
-  height:
-    70vw;
-
-  max-width:
-    800px;
-
-  max-height:
-    800px;
-
-  border-radius:
-    50%;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(
-        206,
-        158,
-        69,
-        0.10
-      ),
-      rgba(
-        0,
-        0,
-        0,
-        0
-      ) 65%
-    );
-
-  opacity:
-    0;
-
-  animation:
-    introGlow
-    1s
-    0.05s
-    ease
-    forwards;
-
-}
-
-
-.intro-logo {
-
-  position:
-    relative;
-
-  z-index:
-    1;
-
-  width:
-    min(
-      42vw,
-      350px
-    );
-
-  opacity:
-    0.88;
-
-  filter:
-    none;
-
-  transform:
-    scale(0.97);
-
-  animation:
-    introLogo
-    0.68s
-    0.04s
-    cubic-bezier(
-      0.2,
-      0.75,
-      0.2,
-      1
-    )
-    forwards;
-
-}
-
-
-.intro-scroll {
-
-  position:
-    absolute;
-
-  bottom:
-    38px;
-
-  left:
-    50%;
-
-  width:
-    max-content;
-
-  max-width:
-    calc(100% - 32px);
-
-  transform:
-    translateX(-50%);
-
-  display:
-    flex;
-
-  flex-direction:
-    column;
-
-  align-items:
-    center;
-
-  gap:
-    12px;
-
-  color:
-    rgba(
-      255,
-      255,
-      255,
-      0.48
-    );
-
-  text-transform:
-    uppercase;
-
-  letter-spacing:
-    0.2em;
-
-  font-size:
-    9px;
-
-  text-align:
-    center;
-
-  opacity:
-    0;
-
-  animation:
-    fadeUp
-    0.6s
-    0.38s
-    ease
-    forwards;
-
-}
-
-
-.intro-scroll i {
-
-  width:
-    1px;
-
-  height:
-    38px;
-
-  background:
-    linear-gradient(
-      to bottom,
-      var(--gold),
-      transparent
-    );
-
-  animation:
-    scrollLine
-    1.7s
-    infinite
-    ease-in-out;
-
-}
-
-
-/* =========================
-   АНИМАЦИЯ ЛОГОТИПА
-   ========================= */
-
-
-@keyframes introLogo {
-
-  to {
-
-    opacity:
-      1;
-
-    filter:
-      blur(0);
-
-    transform:
-      scale(1);
-
-  }
-
-
-
-}
-
-
-@keyframes introGlow {
-
-  to {
-
-    opacity:
-      1;
-
-  }
-
-}
-
-
-@keyframes fadeUp {
-
-  from {
-
-    opacity:
-      0;
-
-    transform:
-      translate(
-        -50%,
-        14px
-      );
-
-  }
-
-
-  to {
-
-    opacity:
-      1;
-
-    transform:
-      translate(
-        -50%,
-        0
-      );
-
-  }
-
-}
-
-
-@keyframes scrollLine {
-
-  0%,
-  100% {
-
-    opacity:
-      0.25;
-
-    transform:
-      scaleY(0.65);
-
-    transform-origin:
-      top;
-
-  }
-
-
-  50% {
-
-    opacity:
-      1;
-
-    transform:
-      scaleY(1);
-
-    transform-origin:
-      top;
-
-  }
-
-}
-
-
-/* =========================
    ВЕРХНЕЕ МЕНЮ
    ========================= */
 
@@ -868,21 +555,7 @@ p {
     no-repeat;
 
   transform:
-    scale(1.08);
-
-  transition:
-    transform
-    1.5s
-    ease;
-
-}
-
-
-.hero.is-visible
-.hero-bg {
-
-  transform:
-    scale(1);
+    none;
 
 }
 
@@ -2556,17 +2229,6 @@ footer {
   }
 
 
-  .intro-logo {
-
-    width:
-      min(
-        58vw,
-        270px
-      );
-
-  }
-
-
   .hero-content {
 
     width:
@@ -3079,30 +2741,6 @@ footer {
   }
 
 
-  .intro-logo {
-    opacity: 1;
-    filter: none;
-    transform: none;
-    animation: none !important;
-  }
-
-  .intro-glow {
-    opacity: 1;
-    transform: none;
-    animation: none !important;
-  }
-
-  .intro-scroll {
-    opacity: 1;
-    filter: none;
-    transform: translateX(-50%);
-    animation: none !important;
-  }
-
-  .intro-scroll i {
-    animation: none;
-  }
-
   .js .reveal {
     opacity: 1;
     transform: none;
@@ -3115,19 +2753,6 @@ footer {
   }
 
   }
-
-@keyframes introReducedFade {
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes introReducedScroll {
-  to {
-    opacity: 1;
-    transform: translateX(-50%);
-  }
-}
 
 /* =========================
    СОВРЕМЕННОЕ ОБНОВЛЕНИЕ
@@ -3936,15 +3561,6 @@ footer {
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 14px;
     font-size: 23px;
-  }
-
-  .intro-screen {
-    min-height: 100vh;
-    min-height: 100dvh;
-  }
-
-  .intro-logo {
-    width: min(54vw, 238px);
   }
 
   .hero {
