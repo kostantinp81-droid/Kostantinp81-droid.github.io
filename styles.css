@@ -1796,6 +1796,212 @@ textarea:focus {
 }
 
 
+@property --field-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+
+.booking .form-field {
+  min-width: 0;
+  margin-bottom: 16px;
+}
+
+
+.booking .form-field > label {
+  margin: 0 0 8px;
+}
+
+
+.field-frame {
+  position: relative;
+  display: block;
+  min-width: 0;
+  padding: 1px;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.12);
+  isolation: isolate;
+  transition:
+    background 0.28s ease,
+    box-shadow 0.28s ease;
+}
+
+
+.field-frame::after {
+  content: "";
+  position: absolute;
+  z-index: 3;
+  inset: -1px;
+  padding: 2px;
+  pointer-events: none;
+  border-radius: 16px;
+  opacity: 0;
+  background:
+    conic-gradient(
+      from var(--field-angle),
+      transparent 0 64%,
+      #f0d392 72%,
+      #d5a952 79%,
+      #6fa893 88%,
+      #2f7467 94%,
+      transparent 100%
+    );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+
+.field-frame.is-tracing::after {
+  animation:
+    field-border-trace
+    1.05s
+    cubic-bezier(0.18, 0.72, 0.22, 1)
+    forwards;
+}
+
+
+.field-frame:focus-within {
+  background:
+    linear-gradient(
+      120deg,
+      rgba(222, 180, 92, 0.96),
+      rgba(47, 116, 103, 0.96)
+    );
+  box-shadow:
+    0 0 0 3px rgba(47, 116, 103, 0.11),
+    0 12px 32px rgba(0, 0, 0, 0.16);
+}
+
+
+.booking .field-frame > input,
+.booking .field-frame > select,
+.booking .field-frame > textarea {
+  position: relative;
+  z-index: 1;
+  margin-top: 0;
+  border: 0;
+  border-radius: 14px;
+  outline: 0;
+  box-shadow: none;
+  background: #080908;
+}
+
+
+.booking .field-frame > input:focus,
+.booking .field-frame > select:focus,
+.booking .field-frame > textarea:focus {
+  border: 0;
+  outline: 0;
+  box-shadow: none;
+  background: #0a0c0a;
+}
+
+
+.field-frame-date > input {
+  padding-right: 62px;
+  color-scheme: dark;
+  cursor: pointer;
+}
+
+
+.field-frame-date input::-webkit-calendar-picker-indicator {
+  width: 0;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+
+.date-picker-button {
+  position: absolute;
+  z-index: 4;
+  top: 50%;
+  right: 7px;
+  display: grid;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  place-items: center;
+  color: var(--gold-light);
+  border: 1px solid rgba(213, 169, 82, 0.22);
+  border-radius: 11px;
+  background: rgba(213, 169, 82, 0.07);
+  transform: translateY(-50%);
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+
+.date-picker-button:hover,
+.date-picker-button:focus-visible {
+  color: #a8d5c5;
+  border-color: rgba(87, 155, 132, 0.55);
+  background: rgba(47, 116, 103, 0.17);
+  outline: none;
+}
+
+
+.date-picker-icon {
+  position: relative;
+  display: block;
+  width: 17px;
+  height: 16px;
+  border: 1.5px solid currentColor;
+  border-radius: 4px;
+}
+
+
+.date-picker-icon::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  right: -1.5px;
+  left: -1.5px;
+  border-top: 1.5px solid currentColor;
+}
+
+
+.date-picker-icon::after {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: 3px;
+  width: 7px;
+  height: 5px;
+  border-right: 1.5px solid currentColor;
+  border-left: 1.5px solid currentColor;
+}
+
+
+@keyframes field-border-trace {
+  0% {
+    --field-angle: 0deg;
+    opacity: 0;
+  }
+
+  14% {
+    opacity: 1;
+  }
+
+  82% {
+    opacity: 1;
+  }
+
+  100% {
+    --field-angle: 360deg;
+    opacity: 0;
+  }
+}
+
+
 .form-row {
 
   display:
@@ -3200,6 +3406,38 @@ footer {
 }
 
 
+.feature-grid article.feature-compact {
+  display: grid;
+  grid-template-columns: clamp(112px, 13vw, 164px) minmax(0, 1fr);
+  gap: clamp(16px, 2.5vw, 25px);
+  align-items: center;
+  justify-content: initial;
+  min-height: 182px;
+  padding: 22px 4px;
+}
+
+
+.feature-grid article.feature-compact > img {
+  width: 100%;
+  height: 128px;
+  margin: 0;
+  object-fit: cover;
+  border-radius: 18px;
+}
+
+
+.feature-grid article.feature-compact h3 {
+  font-size: clamp(28px, 3vw, 38px);
+}
+
+
+.feature-grid article.feature-compact p {
+  color: #aaa59c;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+
 .photo-story {
   width: min(calc(100% - 24px), calc(var(--max) + 84px));
   padding-block: 132px;
@@ -3369,6 +3607,23 @@ textarea:hover {
   border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 16px;
   background: rgba(255, 255, 255, 0.024);
+}
+
+
+@media (min-width: 901px) {
+  .booking.section {
+    grid-template-columns: minmax(300px, 0.72fr) minmax(560px, 1.28fr);
+  }
+
+  .booking form {
+    width: 100%;
+    max-width: 720px;
+    justify-self: end;
+  }
+
+  .booking .form-row {
+    gap: 18px;
+  }
 }
 
 
@@ -3605,6 +3860,26 @@ footer {
   .card-photo,
   .feature-grid img {
     border-radius: 17px;
+  }
+
+  .feature-grid article.feature-compact {
+    grid-template-columns: 108px minmax(0, 1fr);
+    gap: 14px;
+    padding: 18px 2px;
+  }
+
+  .feature-grid article.feature-compact > img {
+    height: 98px;
+    border-radius: 15px;
+  }
+
+  .feature-grid article.feature-compact h3 {
+    font-size: 27px;
+  }
+
+  .feature-grid article.feature-compact p {
+    font-size: 13px;
+    line-height: 1.55;
   }
 
   .card-body {
@@ -4224,6 +4499,11 @@ footer {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .field-frame.is-tracing::after {
+    animation: none;
+    opacity: 0;
+  }
+
   .oxidation-ornament {
     animation: oxidation-reduced 0.42s ease-out forwards;
   }

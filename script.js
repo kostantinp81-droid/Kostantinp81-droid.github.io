@@ -387,7 +387,7 @@ document.addEventListener('visibilitychange', () => {
 });
 
 const oxidationTriggerSelector =
-  'button, .button, .nav-cta, .house-catalog-card, input, select, textarea';
+  'button:not(.date-picker-button), .button, .nav-cta, .house-catalog-card';
 
 function showOxidationOrnament(x, y) {
   const ornament = document.createElement('span');
@@ -467,6 +467,77 @@ document.addEventListener('keydown', (event) => {
     rect.top + rect.height / 2
   );
 });
+
+
+const fieldTraceTimers = new WeakMap();
+
+function traceFieldBorder(control) {
+  const frame = control.closest('.field-frame');
+
+  if (!frame) return;
+
+  const previousTimer = fieldTraceTimers.get(frame);
+
+  if (previousTimer) {
+    window.clearTimeout(previousTimer);
+  }
+
+  frame.classList.remove('is-tracing');
+
+  window.requestAnimationFrame(() => {
+    frame.classList.add('is-tracing');
+
+    const timer = window.setTimeout(() => {
+      frame.classList.remove('is-tracing');
+      fieldTraceTimers.delete(frame);
+    }, 1150);
+
+    fieldTraceTimers.set(frame, timer);
+  });
+}
+
+document
+  .querySelectorAll(
+    '#bookingForm .field-frame input, ' +
+    '#bookingForm .field-frame select, ' +
+    '#bookingForm .field-frame textarea'
+  )
+  .forEach((control) => {
+    control.addEventListener('focus', () => {
+      traceFieldBorder(control);
+    });
+
+    control.addEventListener('pointerdown', () => {
+      if (document.activeElement === control) {
+        traceFieldBorder(control);
+      }
+    });
+  });
+
+document.querySelectorAll('.date-picker-button').forEach((button) => {
+  button.addEventListener('click', () => {
+    const targetId = button.dataset.dateTarget || '';
+    const input = document.getElementById(targetId);
+
+    if (!(input instanceof HTMLInputElement) || input.disabled) {
+      return;
+    }
+
+    traceFieldBorder(input);
+    input.focus({ preventScroll: true });
+
+    try {
+      if (typeof input.showPicker === 'function') {
+        input.showPicker();
+      } else {
+        input.click();
+      }
+    } catch (error) {
+      input.focus();
+    }
+  });
+});
+
 
 const today = new Date();
 today.setHours(0, 0, 0, 0);
