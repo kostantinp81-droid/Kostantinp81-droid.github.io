@@ -4498,6 +4498,61 @@ footer {
   }
 }
 
+/* На телефонах все варианты отдыха имеют одинаковый визуальный вес. */
+@media (max-width: 900px) {
+  .rest .feature-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    gap: 16px;
+  }
+
+  .rest .feature-grid article,
+  .rest .feature-grid article:first-child,
+  .rest .feature-grid article:not(:first-child),
+  .rest .feature-grid article.feature-compact {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 0;
+    margin: 0;
+    padding: 10px 10px 22px;
+    border: 1px solid rgba(255, 255, 255, 0.075);
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.025);
+  }
+
+  .rest .feature-grid article > img,
+  .rest .feature-grid article:first-child > img,
+  .rest .feature-grid article.feature-compact > img {
+    width: 100%;
+    height: clamp(190px, 48vw, 260px);
+    aspect-ratio: 16 / 9;
+    margin: 0 0 18px;
+    object-fit: cover;
+    border-radius: 17px;
+  }
+
+  .rest .feature-grid article h3,
+  .rest .feature-grid article p,
+  .rest .feature-grid article:first-child h3,
+  .rest .feature-grid article:first-child p {
+    margin-right: 8px;
+    margin-left: 8px;
+  }
+
+  .rest .feature-grid article h3,
+  .rest .feature-grid article.feature-compact h3 {
+    margin-bottom: 8px;
+    font-size: clamp(28px, 7vw, 36px);
+  }
+
+  .rest .feature-grid article p,
+  .rest .feature-grid article.feature-compact p {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .field-frame.is-tracing::after {
     animation: none;
