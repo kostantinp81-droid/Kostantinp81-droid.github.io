@@ -4586,3 +4586,46 @@ footer {
     transform: translate(-50%, -50%);
   }
 }
+
+/* =========================
+   КОНТАКТЫ В ПОДВАЛЕ
+   ========================= */
+
+.footer-contacts {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 7px;
+  text-align: right;
+}
+
+.footer-contacts a {
+  color: rgba(255, 255, 255, 0.82);
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-contacts a:hover,
+.footer-contacts a:focus-visible {
+  color: var(--gold-light);
+}
+
+.footer-email {
+  font-size: 14px;
+}
+
+.footer-copy {
+  margin-top: 3px;
+  color: #777;
+  font-size: 12px;
+}
+
+@media (max-width: 600px) {
+  footer .footer-contacts {
+    width: 100%;
+    align-items: flex-start;
+    text-align: left;
+  }
+}
+
