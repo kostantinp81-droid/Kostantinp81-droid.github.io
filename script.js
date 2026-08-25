@@ -386,86 +386,14 @@ document.addEventListener('visibilitychange', () => {
   }
 });
 
-const oxidationTriggerSelector =
-  'button:not(.date-picker-button), .button, .nav-cta, .house-catalog-card';
+document.querySelectorAll('[data-ym-goal]').forEach((link) => {
+  link.addEventListener('click', () => {
+    const goalName = link.dataset.ymGoal || '';
 
-function showOxidationOrnament(x, y) {
-  const ornament = document.createElement('span');
-  ornament.className = 'oxidation-ornament';
-  ornament.setAttribute('aria-hidden', 'true');
-  ornament.style.left = `${x}px`;
-  ornament.style.top = `${y}px`;
-  ornament.innerHTML = `
-    <svg viewBox="0 0 120 120" focusable="false">
-      <circle class="oxidation-ring" cx="60" cy="60" r="45" />
-      <circle class="oxidation-ring oxidation-ring-inner" cx="60" cy="60" r="18" />
-      <g class="oxidation-leaf">
-        <path d="M60 48C51 40 52 29 60 20C68 29 69 40 60 48Z" />
-        <path d="M60 21V51" />
-      </g>
-      <g class="oxidation-leaf" transform="rotate(90 60 60)">
-        <path d="M60 48C51 40 52 29 60 20C68 29 69 40 60 48Z" />
-        <path d="M60 21V51" />
-      </g>
-      <g class="oxidation-leaf" transform="rotate(180 60 60)">
-        <path d="M60 48C51 40 52 29 60 20C68 29 69 40 60 48Z" />
-        <path d="M60 21V51" />
-      </g>
-      <g class="oxidation-leaf" transform="rotate(270 60 60)">
-        <path d="M60 48C51 40 52 29 60 20C68 29 69 40 60 48Z" />
-        <path d="M60 21V51" />
-      </g>
-      <path class="oxidation-curl" d="M60 60C45 59 38 51 40 42C42 34 51 35 51 42C51 47 46 49 43 46" />
-      <path class="oxidation-curl" d="M60 60C61 45 69 38 78 40C86 42 85 51 78 51C73 51 71 46 74 43" />
-      <path class="oxidation-curl" d="M60 60C75 61 82 69 80 78C78 86 69 85 69 78C69 73 74 71 77 74" />
-      <path class="oxidation-curl" d="M60 60C59 75 51 82 42 80C34 78 35 69 42 69C47 69 49 74 46 77" />
-      <circle class="oxidation-core" cx="60" cy="60" r="3" />
-    </svg>
-  `;
-
-  document.body.appendChild(ornament);
-
-  const removeOrnament = () => ornament.remove();
-  ornament.addEventListener('animationend', (event) => {
-    if (
-      event.target === ornament &&
-      event.animationName === 'oxidation-bloom'
-    ) {
-      removeOrnament();
+    if (goalName && typeof window.ym === 'function') {
+      window.ym(111932281, 'reachGoal', goalName);
     }
   });
-  window.setTimeout(removeOrnament, 1400);
-}
-
-document.addEventListener('pointerdown', (event) => {
-  const target = event.target instanceof Element
-    ? event.target.closest(oxidationTriggerSelector)
-    : null;
-
-  if (!target || target.matches(':disabled')) return;
-
-  showOxidationOrnament(event.clientX, event.clientY);
-});
-
-document.addEventListener('keydown', (event) => {
-  if (
-    event.repeat ||
-    (event.key !== 'Enter' && event.key !== ' ')
-  ) {
-    return;
-  }
-
-  const target = event.target instanceof Element
-    ? event.target.closest('button, .button, .nav-cta')
-    : null;
-
-  if (!target || target.matches(':disabled')) return;
-
-  const rect = target.getBoundingClientRect();
-  showOxidationOrnament(
-    rect.left + rect.width / 2,
-    rect.top + rect.height / 2
-  );
 });
 
 
