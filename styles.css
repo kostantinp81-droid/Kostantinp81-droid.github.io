@@ -57,11 +57,33 @@
   --max: 1200px;
 
   --radius: 28px;
+
+  /* Единая тёплая обработка фотографий. Чтобы вернуть исходные тона,
+     достаточно удалить значение этой переменной и блок ниже. */
+  --photo-warmth:
+    sepia(0.11)
+    saturate(1.12)
+    brightness(0.98)
+    contrast(1.02);
 }
 
 
 * {
   box-sizing: border-box;
+}
+
+
+/* Тёплый тон применяется только к фотографиям, логотипы не затрагиваются. */
+.hero-bg,
+.card-photo img,
+.split > img,
+.photo-story-grid img,
+.feature-grid img,
+.house-catalog-photo img,
+.house-detail-hero > img,
+.house-detail-layout > img,
+.house-mini-gallery img {
+  filter: var(--photo-warmth);
 }
 
 
@@ -3846,7 +3868,7 @@ footer {
   position: relative;
   margin: 10px 10px 0;
   overflow: hidden;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 4 / 3;
   border-radius: 21px;
 }
 
@@ -3857,17 +3879,14 @@ footer {
   transition: transform 0.8s cubic-bezier(0.2, 0.75, 0.2, 1), filter 0.5s ease;
 }
 
-.house-catalog-photo-oksky img {
-  object-position: 43% center;
-}
-
+.house-catalog-photo-oksky img,
 .house-catalog-photo-elovy img {
-  object-position: 70% center;
+  object-position: center;
 }
 
 .house-catalog-card:hover img {
   transform: scale(1.035);
-  filter: saturate(1.06);
+  filter: var(--photo-warmth) saturate(1.04);
 }
 
 .house-catalog-photo::after {
@@ -3975,12 +3994,9 @@ footer {
   object-fit: cover;
 }
 
-.house-page-oksky .house-detail-hero > img {
-  object-position: 43% center;
-}
-
+.house-page-oksky .house-detail-hero > img,
 .house-page-elovy .house-detail-hero > img {
-  object-position: 70% center;
+  object-position: center;
 }
 
 .house-detail-shade {
