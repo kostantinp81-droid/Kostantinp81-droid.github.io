@@ -1496,198 +1496,6 @@ p {
 }
 
 
-/* Золотая гравировка, которая покрывается медной патиной. */
-.oxidation-ornament {
-
-  position:
-    fixed;
-
-  z-index:
-    1200;
-
-  width:
-    118px;
-
-  height:
-    118px;
-
-  color:
-    #e4bd63;
-
-  pointer-events:
-    none;
-
-  transform-origin:
-    center;
-
-  animation:
-    oxidation-bloom 1.15s cubic-bezier(0.2, 0.72, 0.2, 1) forwards;
-
-}
-
-
-.oxidation-ornament svg {
-
-  width:
-    100%;
-
-  height:
-    100%;
-
-  overflow:
-    visible;
-
-  filter:
-    drop-shadow(0 0 8px currentColor);
-
-  transform:
-    rotate(-10deg);
-
-  animation:
-    oxidation-turn 1.15s ease-out forwards;
-
-}
-
-
-.oxidation-ring,
-.oxidation-leaf,
-.oxidation-curl {
-
-  fill:
-    none;
-
-  stroke:
-    currentColor;
-
-  stroke-linecap:
-    round;
-
-  stroke-linejoin:
-    round;
-
-  vector-effect:
-    non-scaling-stroke;
-
-}
-
-
-.oxidation-ring {
-
-  stroke-width:
-    0.9;
-
-  stroke-dasharray:
-    5 5;
-
-}
-
-
-.oxidation-ring-inner {
-
-  stroke-dasharray:
-    2 4;
-
-}
-
-
-.oxidation-leaf {
-
-  stroke-width:
-    1.15;
-
-}
-
-
-.oxidation-leaf path:first-child {
-
-  fill:
-    currentColor;
-
-  fill-opacity:
-    0.1;
-
-}
-
-
-.oxidation-curl {
-
-  stroke-width:
-    1.25;
-
-  stroke-dasharray:
-    42;
-
-  stroke-dashoffset:
-    42;
-
-  animation:
-    oxidation-carve 0.75s 0.08s ease-out forwards;
-
-}
-
-
-.oxidation-core {
-
-  fill:
-    currentColor;
-
-}
-
-
-@keyframes oxidation-bloom {
-
-  0% {
-    opacity: 0;
-    color: #e8c56f;
-    transform: translate(-50%, -50%) scale(0.28);
-  }
-
-  28% {
-    opacity: 0.92;
-    color: #edcf7c;
-  }
-
-  62% {
-    opacity: 0.82;
-    color: #a4a263;
-  }
-
-  82% {
-    opacity: 0.58;
-    color: #4e8b76;
-  }
-
-  100% {
-    opacity: 0;
-    color: #2f7467;
-    transform: translate(-50%, -50%) scale(1.18);
-  }
-
-}
-
-
-@keyframes oxidation-turn {
-
-  from {
-    transform: rotate(-12deg);
-  }
-
-  to {
-    transform: rotate(7deg);
-  }
-
-}
-
-
-@keyframes oxidation-carve {
-
-  to {
-    stroke-dashoffset: 0;
-  }
-
-}
-
-
 .booking form {
 
   padding:
@@ -4558,33 +4366,6 @@ footer {
     animation: none;
     opacity: 0;
   }
-
-  .oxidation-ornament {
-    animation: oxidation-reduced 0.42s ease-out forwards;
-  }
-
-  .oxidation-ornament svg {
-    animation: none;
-  }
-}
-
-@keyframes oxidation-reduced {
-  0% {
-    opacity: 0;
-    color: #e8c56f;
-    transform: translate(-50%, -50%);
-  }
-
-  55% {
-    opacity: 0.7;
-    color: #8c9c68;
-  }
-
-  100% {
-    opacity: 0;
-    color: #2f7467;
-    transform: translate(-50%, -50%);
-  }
 }
 
 /* =========================
@@ -4626,6 +4407,26 @@ footer {
     width: 100%;
     align-items: flex-start;
     text-align: left;
+  }
+}
+
+.footer-map-link {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.footer-map-link small {
+  color: rgba(255, 255, 255, 0.48);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+@media (max-width: 600px) {
+  footer .footer-map-link {
+    align-items: flex-start;
   }
 }
 
