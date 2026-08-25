@@ -569,7 +569,7 @@ p {
 
   background:
     url(
-      "assets/aframe-front-new.webp"
+      "assets/sunset-oka-new.webp"
     )
     center 56%
     /
@@ -4150,23 +4150,77 @@ footer {
 
 .house-mini-gallery {
   display: grid;
-  grid-template-columns: 1.25fr 0.75fr 0.75fr;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: 12px;
   width: min(calc(100% - 24px), calc(var(--max) + 84px));
   padding-block: 40px 120px;
 }
 
+.house-gallery-heading {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 0.65fr) minmax(0, 1.35fr);
+  align-items: end;
+  gap: 36px;
+  margin-bottom: 24px;
+}
+
+.house-gallery-heading p,
+.house-gallery-heading h2 {
+  margin-bottom: 0;
+}
+
 .house-mini-gallery figure {
-  min-height: 420px;
+  position: relative;
+  grid-column: span 3;
+  min-height: 320px;
   margin: 0;
   overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.075);
   border-radius: 26px;
+  background: #10110e;
+}
+
+.house-mini-gallery figure:nth-of-type(1) {
+  grid-column: span 7;
+  min-height: 520px;
+}
+
+.house-mini-gallery figure:nth-of-type(2) {
+  grid-column: span 5;
+  min-height: 520px;
+}
+
+.house-mini-gallery figure::after {
+  content: "";
+  position: absolute;
+  inset: 48% 0 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(2, 3, 2, 0.82), transparent);
 }
 
 .house-mini-gallery img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.7s ease;
+}
+
+.house-mini-gallery figure:hover img {
+  transform: scale(1.025);
+}
+
+.house-mini-gallery figcaption {
+  position: absolute;
+  z-index: 2;
+  right: 20px;
+  bottom: 18px;
+  left: 20px;
+  color: rgba(244, 241, 232, 0.92);
+  font-size: 11px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
 }
 
 .house-detail-booking {
@@ -4225,8 +4279,21 @@ footer {
     grid-template-columns: 1fr 1fr;
   }
 
-  .house-mini-gallery figure:first-child {
+  .house-gallery-heading {
     grid-column: 1 / -1;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .house-mini-gallery figure,
+  .house-mini-gallery figure:nth-of-type(2) {
+    grid-column: auto;
+    min-height: 360px;
+  }
+
+  .house-mini-gallery figure:nth-of-type(1) {
+    grid-column: 1 / -1;
+    min-height: 480px;
   }
 }
 
@@ -4309,9 +4376,10 @@ footer {
   }
 
   .house-mini-gallery figure,
-  .house-mini-gallery figure:first-child {
+  .house-mini-gallery figure:nth-of-type(1),
+  .house-mini-gallery figure:nth-of-type(2) {
     grid-column: auto;
-    min-height: 300px;
+    min-height: 330px;
     border-radius: 21px;
   }
 
